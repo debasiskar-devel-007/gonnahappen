@@ -1,0 +1,83 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for contact us
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function contactus_schema() {
+  $schema = array();
+
+  $schema['contactus'] = array(
+    'description' => 'Contact Us Table for Entity',
+    'fields' => array(
+      'contact_id' => array(
+        'description' => 'Primary Key contact us id',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'first_name' => array(
+        'description' => 'First name',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'last_name' => array(
+        'description' => 'Last Name',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'email' => array(
+        'description' => 'Email',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'phone' => array(
+        'description' => 'Phone Number',
+        'type' => 'varchar',
+        'length' => '255',
+        'default' => '',
+      ),
+      'comments' => array(
+        'description' => 'Comments',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'postedon' => array(
+        'description' => 'Post Time',
+        'type' => 'int',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'enquiry_type' => array(
+        'description' => 'Enquery type',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'search_tag' => array(
+        'description' => 'search_tag',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+
+
+    ),
+    'primary key' => array('contact_id'),
+
+  );
+  return $schema;
+}

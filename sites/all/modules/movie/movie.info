@@ -1,0 +1,3 @@
+core = "7.x"
+description ="This is a demo module for knowing about how to work with  entity in drupl 7 "
+name="movie"

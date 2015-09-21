@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for contact us
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function event_schema() {
+  $schema = array();
+
+  $schema['event'] = array(
+    'description' => 'Event Manager Table for Entity',
+    'fields' => array(
+      'event_id' => array(
+        'description' => 'Primary Key event id',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'event_name' => array(
+              'description' => 'Event Name',
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+              'default' => '',
+      ),
+      'location' => array(
+              'description' => 'Location',
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+              'default' => '',
+      ),
+      'search_tag' => array(
+              'description' => 'search_tag',
+              'type' => 'varchar',
+              'length' => '255',
+              'not null' => TRUE,
+              'default' => '',
+      ),
+
+
+
+    ),
+    'primary key' => array('event_id'),
+
+  );
+  return $schema;
+}

@@ -1,0 +1,6 @@
+name = "Event Manager"
+description = "Event Manager Entity"
+core = 7.x
+package = Event Manager
+
+dependencies[] = entity

@@ -1,0 +1,203 @@
+<?php
+function movie_version_entity_info(){
+$movie_version['movie_version'] = array(
+'label' => t('Movie Version'),
+'controller class' => 'EntityAPIController',
+'base table' => 'movie_version',
+'static cache' => TRUE,
+'field cache' => TRUE,
+'load hook' => 'movie_version_load',
+'uri callback' => 'movie_version_uri',
+'fieldable' => TRUE,
+'entity keys' => array(
+'id' => 'id',
+'label'=>'title',
+),
+'bundles' => array(
+'movie_version'=> array(
+'label' => 'Movie Version',
+'admin' => array(
+'path' => 'admin/structure/movie_version/manage',
+'access arguments' => array('administer movie versions'),
+),
+),
+),
+'view modes' => array(
+'full' => array(
+'label' => t('Movie version Full'),
+'custom settings' => FALSE,
+),
+'teaser' => array(
+'label' => t('Movie version teaser'),
+'custom settings' => FALSE,
+),
+)
+);
+return $movie_version;
+}
+
+function movie_version_uri($movie_version){
+    return array(
+        'path' => 'movie_version/' . $movie_version->id,
+    );
+
+}
+
+function movie_version_load($pid = NULL, $reset = FALSE){
+    $pids = (isset ($pid) ? array($pid) : array());
+    $movie_version = movie_version_load_multiple($pids, $reset);
+    return $movie_version ? reset ($movie_version) : FALSE;
+}
+
+function movie_version_load_multiple($pids = array(), $conditions = array(), $reset = FALSE){
+    return entity_load('movie_version', $pids, $conditions, $reset);
+}
+
+
+function movie_version_menu(){
+    $items['admin/structure/movie_version/manage'] = array(
+        'title' => 'Movie version Admin',
+        'description' => 'Manage Movie version structure',
+        'page callback' => 'movie_version_info',
+        'access arguments' => array('administer movie versions'),
+    );
+    $items['movie_version/%movie_version'] = array(
+        'title callback' => 'movie_version_page_title',
+        'title arguments' => array(1),
+        'page callback' => 'movie_version_page_view',
+        'page arguments' => array(1),
+        'access arguments' => array('view movie versions'),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['movie_version/add'] = array(
+        'title' => 'Add a movie version!',
+        'page callback' => 'movie_version_add',
+        'access arguments' => array('create movie versions'),
+    );
+    $items['movie_version/%movie_version/edit'] = array(
+        'title' => 'Edit this movie version!',
+        'page callback' => 'movie_version_edit',
+        'access arguments' => array('edit movie versions'),
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+
+function movie_version_permission(){
+    return array(
+        'administer movie versions' => array(
+            'title' => t('Administer movie versions'),
+            'restrict access' => TRUE,
+        ),
+        'view movie versions' => array(
+            'title' => t('View movie versions'),
+        ),
+        'create movie versions' => array(
+            'title' => t('Create movie versions'),
+        ),
+        'edit movie versions' => array(
+            'title' => t('Edit movie versions'),
+        ),
+    );
+}
+
+
+function movie_version_info() {
+    return ('Welcome to the administration page for your Movie versions!');
+}
+
+function movie_version_page_title($movie_version){
+    return $movie_version->id;
+}
+
+function movie_version_page_view($movie_version, $view_mode = 'full'){
+    $movie_version->content = array();
+    field_attach_prepare_view('movie_version', array($movie_version->id => $movie_version), $view_mode);
+    entity_prepare_view('movie_version', array($movie_version->id => $movie_version));
+    $movie_version->content += field_attach_view('movie_version', $movie_version, $view_mode);
+    $links = "";
+    return $movie_version->content;
+}
+
+function movie_version_field_extra_fields() {
+    $return = array();
+    $return['movie_version']['movie_version'] = array(
+        'form' => array(
+            'title' => array(
+                'label' => t('title'),
+                'description' => t('title'),
+            ),
+        ),
+    );
+
+    return $return;
+}
+
+function movie_version_add() {
+    $movie_version = (object) array (
+        'id' => '',
+        'uuid' => '',
+        'type' => 'movie_version',
+        'title' => '',
+    );
+
+    return drupal_get_form('movie_version_add_form', $movie_version);
+}
+function movie_version_edit($movie_version) {
+
+    return drupal_get_form('movie_version_add_form', $movie_version);
+}
+
+function movie_version_add_form($form, &$form_state, $movie_version) {
+    $form['id'] = array(
+        '#type' => 'hidden',
+        '#value' => $movie_version->id,
+    );
+    $form['uuid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('uuid'),
+        '#required' => TRUE,
+        '#default_value' => $movie_version->uuid,
+    );
+    $form['title'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Movie version title'),
+        '#required' => TRUE,
+        '#default_value' => $movie_version->title,
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Save'),
+
+    );
+
+    field_attach_form('movie_version', $movie_version, $form, $form_state);
+    return $form;
+}
+
+function movie_version_add_form_submit($form, &$form_state) {
+    $movie_version = (object) $form_state['values'];
+    field_attach_submit('movie_version', $movie_version, $form, $form_state);
+    if(movie_version_save($movie_version)==SAVED_NEW||movie_version_save($movie_version)==SAVED_UPDATED){
+        $form_state['redirect'] = "movie_version/".$movie_version->id;
+    }
+}
+
+function movie_version_save(&$movie_version) {
+    $entity = entity_get_controller('movie_version')->save($movie_version);
+    return $entity;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function movie_version_form_alter(&$form, &$form_state, $form_id) {
+    if($form_id=="movie_version_add_form"){
+        $form['submit']["#weight"] = "99";
+    }
+}

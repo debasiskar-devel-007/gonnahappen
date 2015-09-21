@@ -1,0 +1,6 @@
+name = "Contact Us"
+description = "Contact Us Entity"
+core = 7.x
+package = Contact Us
+
+dependencies[] = entity

@@ -1,0 +1,34 @@
+<?php
+$schema = array(
+'movie_version' => array(
+'description' => 'Movie version',
+'fields' => array(
+
+/*An id is not provided by default*/
+'id' => array(
+'type' => 'serial',
+'unsigned' => TRUE,
+'not null' => TRUE
+),
+'title' => array(
+'type' => 'varchar',
+'length' => 255,
+'not null' => FALSE,
+'sortable' => TRUE
+),
+'uuid' => array(
+'type' => 'varchar',
+'length' => 255,
+'not null' => FALSE,
+'sortable' => TRUE
+),
+
+/*We will add the oter fields via the fields interface*/
+),
+'primary key' => array('id'),
+),
+
+);
+return $schema;
+}
+?>

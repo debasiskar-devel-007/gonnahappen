@@ -1,0 +1,146 @@
+.header_bottom{ background:#0068ba; width:auto; width:100%; padding-left:3%; padding-right:3%;}
+.header_bottom h2{ margin:0; padding:0; background:url(../img/event_icon.png) no-repeat left center; padding:10px 0 10px 32px; font-size:22px; color:#ffffff; display:block; width:50%; float:left;}
+
+
+
+
+.main-header .logo { height:72px;}
+
+.navbar-static-top{ height:72px;}
+
+
+.user-menu{ margin-right:50px; width:280px; margin-top:-10px; background-image:url(../img/arrow.png)!important; background-repeat:no-repeat; background-position:94% 22px; }
+
+.navbar-nav > .user-menu .user-image {
+    border-radius: 50%;
+    float: left;
+    height: 48px;
+    margin-right: 10px;
+    margin-top: -5px;
+    width: 48px;
+	border:solid 2px #dadada;
+}
+
+
+.hidden-xs{ font-size:17px; color:#0068ba!important; }
+
+
+.skin-green .main-header .navbar .nav > li > a label{ font-weight:normal; font-size:12px; color:#b3b2b2; display:block;}
+
+.skin-green .main-header .navbar .nav > li > a strong{ font-weight:normal; font-size:17px; display:block;}
+
+
+.hidden-xs{ margin-top:-20px;}
+
+
+
+
+.user-menu:hover a{color:#0068ba!important;}
+
+
+.searvhbox{ margin-top:-2px;}
+
+
+.searvhbox input[type="text"]{ background-color:#f6f6f6!important; border:none!important; }
+
+.searvhbox button{ background-color:#f6f6f6!important; border:none!important }
+
+ .skin-green .sidebar-form{ border:solid 1px #dadada!important;}
+ 
+ 
+ 
+.toprightmenu{ display:block; float:right; width:460px; background:none!important; border:none!important; margin:-2px 0 0 0!important; padding:0!important; text-align:right!important; border-radius:0px!important;}
+
+.toprightmenu ul li{ background:url(../img/menudevider.png) repeat-y top right;}
+.toprightmenu ul li:last-child{ background:none;}
+.toprightmenu ul li a{ color:#fff!important; font-size:14px!important;}
+
+.skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side{background:#505050!important;}
+
+
+.left_side_menu{ padding-top:40px; background:#505050;}
+
+.left_side_menu li a{ font-size:14px; color:#ffffff!important; display:block; line-height:40px;}
+
+
+
+.left_side_menu li img{ display:inline; margin:0 17px 0 0;}
+
+.skin-green .sidebar-menu > li:hover > a, .skin-green .sidebar-menu > li.active > a {
+background: #000000 url(../img/menuhover.png) no-repeat right center;
+    color: #ffffff;
+	
+}
+
+.skin-green .sidebar-menu > li > a{ border:none;}
+
+.sidebar-menu > li > a {
+    display: block;
+    padding: 12px 5px 12px 10px;
+}
+
+.content-wrapper{ background:#fff;}
+
+.main-footer{ padding:0 15px;}
+
+.main-footer .footer_text{ display:block; width:300px; float:left; padding:32px 0;}
+
+.main-footer img{ display:block; float:right; margin-top:8px;}
+
+
+
+@media screen and (max-width:980px) {
+
+
+.left_side_menu{ padding-top:113px; background:#505050;}
+.header_bottom{ padding-bottom:5px;}
+
+.header_bottom h2{ margin:0; padding:0; background:none; padding:15px 0 ; font-size:22px; color:#ffffff; display:block; width:100%; float:none; text-align:center; border-bottom:solid 1px #094778;}
+
+.header_bottom h2::first-letter {
+    background:url(../img/event_icon.png) no-repeat left center; padding-left:32px;
+}
+
+.toprightmenu{ display:block; float:none; width:100%; background:none!important; border:none!important; margin:5px auto!important; padding:0!important; text-align:right!important; border-radius:0px!important;}
+}
+
+
+@media screen and (max-width:840px) {
+.user-menu{ margin-right:50px; width:240px; margin-top:-10px; background-image:url(../img/arrow.png)!important; background-repeat:no-repeat; background-position:94% 22px; }
+
+}
+
+
+@media screen and (max-width:767px) {
+
+.left_side_menu{ padding-top:360px; background:#505050;}
+.user-menu{ margin-right:50px; width:auto; margin-top:-10px; background-image:url(../img/arrow.png)!important; background-repeat:no-repeat; background-position:94% 22px;  }
+.toprightmenu ul li{ background:none; text-align:center;}
+}
+
+
+@media screen and (max-width:520px) {
+
+.main-footer .footer_text{ display:block; width:100%; float:none; padding:10px 0 10px 0; text-align:center;}
+
+.main-footer img{ display:block; float:none; margin:0 auto; margin-top:0px;}
+
+
+
+}
+
+@media screen and (max-width:400px) {
+.navbar-static-top{ height:120px!important;}
+
+
+}
+
+
+@media screen and (max-width:360px) {
+
+
+.navbar-static-top{ height:180px!important;}
+.searvhbox{ width:80%!important;}
+.user-menu{ width:auto; margin-left:auto; margin-right:auto;}
+
+}
