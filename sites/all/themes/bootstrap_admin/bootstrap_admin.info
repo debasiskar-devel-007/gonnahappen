@@ -1,7 +1,7 @@
 name=bootstrap_admin
 description=This is the backend theme of the project Bootstrap-admin
 core=7.x
-engine=phptemplate
+engine = phptemplate
 
 stylesheets[all][]=css/bootstrap.min.css
 stylesheets[all][]=css/font-awesome.min.css

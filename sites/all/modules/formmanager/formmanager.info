@@ -1,0 +1,6 @@
+name = "Manage Forms"
+description = "Manage Forms by this "
+core = 7.x
+package = Custom Modules
+
+
