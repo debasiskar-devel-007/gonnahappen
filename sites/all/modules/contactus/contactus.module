@@ -67,10 +67,10 @@ function contactus_menu() {
         'access arguments' => array('view', 1),
     );
 
-    $items['contact/locate'] = array(
+    /*$items['contact/locate'] = array(
         'page callback' => 'contact_locate_callback',
-        'access arguments' => array('access content'),
-    );
+        'access arguments' => array('administer contact entities'),
+    );*/
 
     $items['admin/content/contactus/bulk/delete/%'] = array(
         'title' => 'Bulk Delete contacts',

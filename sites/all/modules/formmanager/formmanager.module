@@ -28,6 +28,8 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
             '#description' => t('Check this box to delete your current picture.'),
         );
 
+        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=admin/dashboard';
+
     }
 
     if($form_id == 'user_pass')

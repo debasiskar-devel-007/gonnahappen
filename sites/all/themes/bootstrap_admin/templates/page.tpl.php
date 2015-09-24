@@ -27,7 +27,7 @@
                 <?php if ($logo): ?>
             <span class="logo-lg">
 
-                  <img src="sites/all/themes/bootstrap_admin/img/logo.png"  >
+                  <img src="<?php echo $logo ; ?>"  >
 
                 </span>
                 <?php endif; ?>
@@ -154,45 +154,63 @@
 
 
 
-            <ul class="sidebar-menu  left_side_menu">
-              
-                <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"> <img src="sites/all/themes/bootstrap_admin/img/nav1.png"  alt="#"/> Banner Manager</a></li>
-                <li><a href="#"><img src="sites/all/themes/bootstrap_admin/img/nav2.png"  alt="#"/>Events Manager</a></li>
-                <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav3.png"  alt="#"/> Tournament Manager</a></li>
-                <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav4.png"  alt="#"/>  Artist Manager</a></li>
-                <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav5.png"  alt="#"/>  User Manager</a></li>
-                <li><a href="#"> <img src="sites/all/themes/bootstrap_admin/img/nav6.png"  alt="#"/>  Affiliate Manager</a></li>
-                <li><a href="#">   <img src="sites/all/themes/bootstrap_admin/img/nav7.png"  alt="#"/> Ads Manager</a></li>
-                <li><a href="#"> <img src="sites/all/themes/bootstrap_admin/img/nav8.png"  alt="#"/>  Contact Manager</a></li>
-                <li><a href="#"> <img src="sites/all/themes/bootstrap_admin/img/nav9.png"  alt="#"/>  Talent Manager</a></li>
-               <li><a href="#"> <img src="sites/all/themes/bootstrap_admin/img/nav10.png"  alt="#"/>  Auto Email Manager</a></li>
-               <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav11.png"  alt="#"/>  Media</a></li>
-               <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav12.png"  alt="#"/>  Comments</a></li>
-              <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav13.png"  alt="#"/> Products</a></li>
-             <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav14.png"  alt="#"/>  FAQ</a></li>
-            <li><a href="#">   <img src="sites/all/themes/bootstrap_admin/img/nav15.png"  alt="#"/> News Blog</a></li>
-    <li><a href="#">   <img src="sites/all/themes/bootstrap_admin/img/nav16.png"  alt="#"/> Terms and Condition</a></li>
-<li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav17.png"  alt="#"/>  Privacy Statement</a></li>
-<li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav18.png"  alt="#"/>  Return and Shipping Policy</a></li>
- <li><a href="#">  <img src="sites/all/themes/bootstrap_admin/img/nav19.png"  alt="#"/>  Affiliate Agreement</a></li>
 
-                
-                
-                
-                
-                
-                
-                
-      
-                <!--<li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
-                    </ul>
-                </li>-->
-            </ul><!-- /.sidebar-menu -->
+
+            <?php
+            $menu=(menu_tree_all_data('navigation'));
+
+            // var_dump(count($menu));
+            // exit;
+
+            if(count($menu)>0){
+                echo ' <ul class="sidebar-menu left_side_menu">
+                     <li class="header">HEADER</li> ';
+
+
+                display_menu_tree($menu);
+
+
+                //if($treefinished ==0 && $treestarted==1 ) echo ' </ul>';
+                echo ' </ul>';
+
+            }
+
+            global $catcounter;
+            $catcounter =0;
+            $menuarr[]=array('');
+
+            function display_menu_tree($arr){
+                //$catcounter=0;
+                foreach($arr as $key=>$value){
+
+                    if(count($value['below']))
+                    {
+
+
+                        $menuarr[]=$value['link']['link_path'];
+                        echo '<li class="treeview">
+                    <a href="'.$value['link']['link_path'].'">
+                    <i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span> <i class="fa fa-angle-left pull-right"></i></a>';
+                        echo ' <ul class="treeview-menu">';
+
+
+                        display_menu_tree($value['below']);
+                        echo '</ul>';
+
+
+                    }
+
+                   if(!in_array($value['link']['link_path'],$menuarr)) echo '<li><a href="'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                }
+            }
+
+            ?>
+
+
+
+
+
+
         </section>
         <!-- /.sidebar -->
     </aside>
@@ -226,7 +244,11 @@
 
 <?php
 
-print render($page['content']); ?>
+print render($page['content']);
+
+//print_r($menu);
+
+?>
 
     </section><!-- /.content -->
 </div>
@@ -242,7 +264,7 @@ print render($page['content']); ?>
     <!-- Default to the left -->
     <div class="footer_text">&copy; 2015 <a href="#">gonnahappen</a>.All rights reserved.</div>
     
-    <img src="sites/all/themes/bootstrap_admin/img/footerlogo.png"  alt="#"/>
+    <img src="<?php echo $logo ; ?>"  alt="#"/>
     <div style="clear:both;"></div>
     
 </footer>
