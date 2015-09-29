@@ -16,6 +16,7 @@ scripts[]=js/bootstrap.min.js
 scripts[]=js/app.min.js
 scripts[]=js/respond.min.js
 scripts[]=js/html5shiv.min.js
+scripts[]=js/common.js
 
 regions[header]=Header
 regions[left_siderbar]=Left Sidebar

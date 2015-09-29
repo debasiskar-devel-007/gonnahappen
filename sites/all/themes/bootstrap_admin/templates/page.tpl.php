@@ -59,17 +59,39 @@
             </form>
 
 </li>
-        
+                    <?php if (user_is_logged_in() == TRUE) {
+                        global $user;
+                       // print_r($user);
+                        global $base_url;
+                       // echo $user->name;
+                        $fid = $user->picture;
+                        $create_time=strtoupper(date("M j, Y",$user->created));
+                        $user_role=$user->roles[4];
+                        //var_dump($fid);
+                        $file = file_load($fid);
+                        //var_dump($file);
+                        if($fid)
+                        {
+                            $image_path= file_create_url($file->uri);
+                        }
+                        else
+                        {
+                            $image_path= $base_url.'/sites/default/files/pictures/profile_pic_dummy.jpg"';
+                        }
+
+
+                    ?>
                     <li class="dropdown user user-menu">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="<?php echo $themepath ; ?>/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <?php //print $user_pic ?>
+                           <img src="<?php echo  $image_path ?>" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">
-                            <strong>Alexander Pierce</strong>
+                            <strong> <?php print "Welcome " . $user->name; ?></strong>
 
-                            <label>Administrator</label>
+                            <label><?php echo $user_role ?></label>
                             
                             </span>
                             
@@ -78,14 +100,15 @@
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="<?php echo $themepath ; ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <?php //print $user_picp ?>
+                                <img src="<?php echo   $image_path ?>" class="img-circle" alt="User Image">
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    <?php print "Welcome " . $user->name; ?>
+                                    <small>Member since <?php echo $create_time ?></small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
-                            <li class="user-body">
+                           <!-- <li class="user-body">
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Followers</a>
                                 </div>
@@ -95,18 +118,20 @@
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Friends</a>
                                 </div>
-                            </li>
+                            </li>-->
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="profile" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="user/logout" class="btn btn-default btn-flat">Sign out</a>
                                 </div>
                             </li>
                         </ul>
                     </li>
+
+                    <?php  } ?>
                     <!-- Control Sidebar Toggle Button -->
                  
                 </ul>
@@ -116,7 +141,7 @@
         
         <div class="header_bottom">
         
-        <h2>Events Manager</h2>
+        <!--<h2>Events Manager</h2>-->
         <nav class="navbar navbar-default toprightmenu" >
 
     
@@ -159,7 +184,7 @@
             <?php
             $menu=(menu_tree_all_data('navigation'));
 
-            // var_dump(count($menu));
+             var_dump(count($menu));
             // exit;
 
             if(count($menu)>0){
@@ -226,7 +251,7 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!--<section class="content-header">
         <h1>
             Page Header
             <small>Optional description</small>
@@ -235,7 +260,7 @@
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Here</li>
         </ol>
-    </section>
+    </section>-->
 
     <!-- Main content -->
     <section class="content">

@@ -98,7 +98,7 @@ function contactus_theme() {
     return array(
         'contactus_full' => array(
             'variables' => array('contact' => NULL),
-            'file' => 'includes/contactus.theme.inc',
+            'file' => 'includes/dashboard.theme.inc',
         ),
     );
 }

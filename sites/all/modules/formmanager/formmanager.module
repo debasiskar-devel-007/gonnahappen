@@ -5,7 +5,9 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
     if($form_id == 'user_login' )
     {
         $form['name']['#attributes']['class'][] = 'form-control';
+        $form['name']['#attributes']['placeholder'] = 'User Name';
         $form['pass']['#attributes']['class'][] = 'form-control';
+        $form['pass']['#attributes']['placeholder'] = 'Password';
         $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-block btn-flat';
         //$form['submit']['#value'] = 'btn';
         $form['actions']['submit']['#value'] = 'Sign In';
@@ -23,19 +25,23 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
         $form ['rememberme'] = array(
             '#type' => 'checkbox',
             '#title' => t('rememberme'),
+            '#default_value' => t('No'),
+            '#value'=>5,
             '#options' => $options,
             //'#access' => !empty($account->picture->fid),
             '#description' => t('Check this box to delete your current picture.'),
         );
 
-        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=admin/dashboard';
+        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=dashboard';
 
     }
 
     if($form_id == 'user_pass')
     {
         $form['name']['#attributes']['class'][] = 'form-control';
+        $form['name']['#attributes']['placeholder'] = 'Enter Your Email or User Name';
         $form['pass']['#attributes']['class'][] = 'form-control';
+
         $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-block btn-flat';
         //$form['submit']['#value'] = 'btn';
         $form['actions']['submit']['#value'] = 'Sign In';

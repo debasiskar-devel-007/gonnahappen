@@ -95,6 +95,188 @@ background: #000000 url(../img/menuhover.png) no-repeat right center;
 
 
 
+
+.dashboard_wrapper{ width: 100%;}
+
+.dashboard_link_list{ width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard_link_list li{ list-style: none; width: 158px; float: left; text-align: center; margin: 15px 30px 15px 0; font-size: 14px; color:#5f5f5f;}
+
+.dashboard_link_list li a{color:#5f5f5f;}
+
+
+.dashboard_link_list li::last-word {
+    color:#ff0000;
+}
+
+
+
+.dashboard_link_list li img{ margin-bottom: 10px;}
+
+
+.acordian_block {width: 100%; margin-top: 15px;}
+
+
+.acordian_block .panel-heading {width: 100%; border-radius: 0px; background-color:#333; color: #fff; font-size: 14px; font-weight: normal; padding: 10px 6px;}
+
+.acordian_block .panel-heading a{color: #fff; font-size: 14px; font-weight: normal; display: block;}
+
+.acordian_block .panel-heading a:hover{color: #fff; }
+
+
+.acordian_block .panel-body{ padding: 0; border-radius: 0px; margin-bottom: 1px;}
+
+.acordian_block  .panel-group .panel{ padding: 0; border-radius: 0px; margin-bottom: 1px;}
+
+.acordian_block  .panel-group .panel+.panel{ margin-top: 1px;}
+
+
+.acordian_block .panel-body table{ width: 100%; border: none;}
+
+.acordian_block .panel-body table th{ background: #ededed;
+    padding: 6px 6px; border: none; font-size: 13px; font-weight: normal; color: #333;}
+
+
+
+.acordian_block .panel-body table td{
+    padding: 6px 6px; border: none; border-top:solid 1px  #ededed;  font-size: 13px; font-weight: normal; color: #333;}
+
+
+.acordian_block .panel-body p{ padding: 6px;}
+
+
+
+.acordian_block .panel-title a { background-image:url(../images/downarrow.png)!important; background-repeat: no-repeat!important; background-position: center left!important; padding: 0 0 0 20px; }
+
+.acordian_block .panel-title a.collapsed {background-image:url(../images/sidearrow.png) !important; background-repeat: no-repeat!important; background-position: center left!important; }
+
+
+
+.profile_box{ width: 98%;
+    padding: 2%; margin: 0 auto; background: #efefef; border-radius: 5px; border: solid 1px #cecccc; border-top: solid 4px #0068ba;}
+
+.profile_box .profile_img{ width: 208px;
+    height: 208px;  border: solid 4px #cecccc; border-radius: 100px; text-align: center; margin: 0 auto; }
+
+.profile_box .profile_img .profile_img_box{ width: 200px;
+height: 200px; display: table-cell; text-align: center; vertical-align: middle; background: #fff; border-radius: 100px;}
+
+.profile_box .profile_img img{ max-width: 98%; max-height:98%; border-radius: 100px; }
+
+
+.profile_box .profile_descripe{ width: 100%; text-align: center;}
+.profile_box .profile_descripe h2{ margin: 0;
+    padding: 10px 0; font-size: 26px; color: #333;}
+
+.profile_box .profile_descripe h3{ margin: 0;
+    padding: 0; font-size: 18px; color: #999; font-weight: normal;}
+
+
+.profile_box .followers_div{ width: 100%;}
+
+.profile_box .followers_div table{ width: 100%; border-top: solid 1px #cecccc; margin: 25px 0; font-size: 18px; color: #333; }
+
+.profile_box .followers_div table td{border-bottom: solid 1px #cecccc; padding: 10px 0;}
+
+.profile_box .followers_div table span{ color: #0068ba;}
+
+
+.profile_box .profile_btn{ background:#0068ba; border: solid 1px #014880; border-radius: 2px; width:100%; line-height: 40px; font-size: 18px;
+    color:#fff;   }
+
+
+form .error{ background: none!important; padding: 0!important; border: none; margin-top: 0px!important; margin-bottom: 12px!important;}
+
+
+@media screen and (max-width:1199px) {
+
+    .dashboard_link_list li {
+        margin: 15px 15px 15px 0;
+
+    }
+}
+
+
+@media screen and (max-width:991px) {
+
+    .dashboard_link_list{ width:520px; margin: 0 auto; display: block;}
+
+}
+
+    @media screen and (max-width:800px) {
+
+        .dashboard_link_list{ width:350px; margin: 0 auto; display: block;}
+
+        }
+
+
+        @media screen and (max-width:767px) {
+
+            .dashboard_link_list{ width:520px; margin: 0 auto; display: block;}
+
+            }
+
+            @media screen and (max-width:570px) {
+
+                .dashboard_link_list{ width:350px; margin: 0 auto; display: block;}
+
+                }
+
+
+                @media screen and (max-width:400px) {
+
+                    .dashboard_link_list {
+                        width: 100%;
+                        margin: 0 auto;
+                        display: block;
+                    }
+
+                    .dashboard_link_list li {
+                        margin: 15px 2%;
+                        width: 46%;
+                        height: 160px;
+
+                    }
+
+                    .dashboard_link_list li img {
+                        width: 100%;
+                    }
+
+
+                    .acordian_block .panel-body table th{ background: #ededed;
+                        padding: 2px 2px; border: none; font-size: 12px; font-weight: normal; color: #333;}
+
+
+
+                    .acordian_block .panel-body table td{
+                        padding: 2px 2px; border: none; border-top:solid 1px  #ededed;  font-size: 12px; font-weight: normal; color: #333;}
+
+                }
+
+
+
+
+@media screen and (max-width:340px) {
+
+
+    .dashboard_link_list li {
+        margin: 15px 2%;
+        width: 46%;
+        height: 140px;
+
+    }
+
+
+}
+
+
+
+
+
+
 @media screen and (max-width:980px) {
 
 

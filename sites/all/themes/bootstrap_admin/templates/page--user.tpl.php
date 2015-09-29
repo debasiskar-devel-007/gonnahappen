@@ -1,3 +1,11 @@
+<?php
+if (user_is_logged_in() == TRUE) {
+    drupal_goto('dashboard');
+?>
+
+
+<?php }
+else {?>
 <div class="login-box">
     <div class="login-logo">
         <a href="<?php echo $GLOBALS['base_url']; ?>"><img src="<?php echo $logo; ?>" /></a>
@@ -7,7 +15,7 @@
 
 
         <?php
-       // print $messages;
+        // print $messages;
 
 
         $elements = drupal_get_form("user_login");
@@ -28,3 +36,4 @@
 
     </div><!-- /.login-box-body -->
 </div>
+<?php }?>

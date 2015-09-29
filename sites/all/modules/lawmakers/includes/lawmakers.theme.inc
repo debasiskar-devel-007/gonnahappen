@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * contactus.theme.inc
+ * dashboard.theme.inc
  */
 
 /**

@@ -1,0 +1,53 @@
+<?php
+function dashboard_menu() {
+$items = array();
+
+
+
+/*$items['contact/locate'] = array(
+'page callback' => 'contact_locate_callback',
+'access arguments' => array('administer contact entities'),
+);*/
+
+$items['dashboard'] = array(
+'title' => 'Dashboard',
+'page callback' => 'drawdashboard',
+//'page arguments' => array('contactus_bulk_delete', 5),
+'access arguments' => array('Dashboard Access'),
+//'file' => 'includes/contactus.admin.inc',
+);
+
+
+
+return $items;
+}
+
+
+function dashboard_permission() {
+    return array(
+        'Dashboard Access' => array(
+            'title' => t('Dashboard Access'),
+            'description' => t('Allows a user to access Dashboard Access'),
+        ),
+
+
+    );
+}
+
+
+function drawdashboard(){
+
+    $contact_output = theme('dashboard', array());
+    //var_dump($contact);
+    return $contact_output;
+}
+
+
+function dashboard_theme() {
+    return array(
+        'dashboard' => array(
+            'variables' => array('dashboard' => NULL),
+            'file' => 'includes/dashboard.theme.inc',
+        ),
+    );
+}
