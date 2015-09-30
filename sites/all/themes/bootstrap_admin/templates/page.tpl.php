@@ -122,10 +122,10 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="profile" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="<?php echo $base_url?>/profile" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="user/logout" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="<?php echo $base_url?>/user/logout" class="btn btn-default btn-flat">Sign out</a>
                                 </div>
                             </li>
                         </ul>
@@ -147,7 +147,7 @@
     
    
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
+        <li class="active"><a href="dashboard">Dashboard</a></li>
         <li><a href="#">Homepage</a></li>
         <li><a href="#">Orders</a></li>
         <li><a href="#">Users</a></li>

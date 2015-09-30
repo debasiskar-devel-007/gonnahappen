@@ -1,3 +1,14 @@
+<?php
+
+
+    global $user;
+    //print_r(user_is_logged_in());exit;
+    // echo $user->uid;exit;
+
+    if ($user->uid > 0){
+        drupal_goto('dashboard');
+ }
+else {?>
 <div class="login-box">
     <div class="login-logo">
         <a href="<?php echo $GLOBALS['base_url']; ?>"><img src="<?php echo $logo; ?>" /></a>
@@ -28,3 +39,4 @@
 
     </div><!-- /.login-box-body -->
 </div>
+<?php }?>

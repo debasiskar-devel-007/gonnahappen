@@ -1,4 +1,23 @@
 <?php
+
+/*function dashboard_user($op, &$edit, &$account, $category = NULL) {
+    echo 1111;exit;
+    global $user;
+
+    switch ($op) {
+        case 'logout':
+            echo 1;exit;
+            drupal_goto('user');
+            break;
+    }
+}*/
+
+function dashboard_user_logout($account) {
+global $base_url;
+
+$_GET['destination'] ='/user/login';
+
+}
 function dashboard_menu() {
 $items = array();
 

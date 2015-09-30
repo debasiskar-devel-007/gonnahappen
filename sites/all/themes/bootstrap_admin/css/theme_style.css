@@ -46,9 +46,9 @@
 .searvhbox button{ background-color:#f6f6f6!important; border:none!important }
 
  .skin-green .sidebar-form{ border:solid 1px #dadada!important;}
- 
- 
- 
+
+
+
 .toprightmenu{ display:block; float:right; width:460px; background:none!important; border:none!important; margin:-2px 0 0 0!important; padding:0!important; text-align:right!important; border-radius:0px!important;}
 
 .toprightmenu ul li{ background:url(../img/menudevider.png) repeat-y top right;}
@@ -69,7 +69,7 @@
 .skin-green .sidebar-menu > li:hover > a, .skin-green .sidebar-menu > li.active > a {
 background: #000000 url(../img/menuhover.png) no-repeat right center;
     color: #ffffff;
-	
+
 }
 
 .skin-green .sidebar-menu > li > a{ border:none;}
@@ -90,10 +90,14 @@ background: #000000 url(../img/menuhover.png) no-repeat right center;
 .not-logged-in{ background: #d2d6de!important;}
 
 .not-logged-in .checkbox {
-    width: 110px; float: left; margin-left: 6px;
+    width: auto; float: none; margin-left: 20px;
 }
 
 
+.form-item, .form-actions{ margin-top: 0px;}
+
+.form-submit{ display: block!important; width: 100%!important; float: none!important; overflow: hidden!important;
+}
 
 
 .dashboard_wrapper{ width: 100%;}
@@ -113,6 +117,7 @@ background: #000000 url(../img/menuhover.png) no-repeat right center;
 }
 
 
+.forgot_xs12{padding: 15px 0 0 0;}
 
 .dashboard_link_list li img{ margin-bottom: 10px;}
 
@@ -189,6 +194,98 @@ height: 200px; display: table-cell; text-align: center; vertical-align: middle; 
 
 
 form .error{ background: none!important; padding: 0!important; border: none; margin-top: 0px!important; margin-bottom: 12px!important;}
+
+
+.dataTable{ margin-top: 25px;}
+
+.dataTable th{ background: #1a2226; color: #fff; font-weight: normal;}
+
+.dataTable th a{color: #fff;}
+.dataTable th a:hover{color: #fff;}
+
+.dataTable th.active{ background: #1a2226!important; color: #fff; font-weight: normal;}
+
+.dataTable th img{ margin-left: 10px;}
+
+.dataTable td{ background: #fff; color: #1a2226; font-weight: normal;}
+
+.dataTable td a{color: #1a2226;}
+.dataTable td a:hover{color: #1a2226;}
+
+
+.item-list ul li{ margin-left: 0px!important; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; color: #111;}
+
+.item-list ul li a{color: #111;}
+
+html.js fieldset.collapsible .fieldset-legend{ font-size: 16px!important; color: #000;}
+
+html.js fieldset.collapsible .fieldset-legend a{color: #000;}
+
+#edit-search-text{ height: 34px;
+    padding: 6px 12px; margin-bottom: 0px!important;}
+#edit-search-submit{     background-color: #3c8dbc;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid  #367fa9; display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center; color: #fff; width: auto!important; }
+
+
+#edit-operations{ height: 34px;
+    padding: 6px 12px; margin-bottom: 0px!important;}
+#edit-submit{     background-color: #3c8dbc;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid  #367fa9; display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center; color: #fff; width: auto!important; }
+
+
+.collapsible label{ font-weight: normal; display: block; width: 100%;}
+
+.collapsible{ margin-bottom: 15px!important;}
+
+.box{ border: none;}
+
+.admin-form{
+    border-radius: 3px;
+    background: #ffffff;
+    border: 1px solid #d2d6de;
+    border-top: 3px solid #d2d6de;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 80%; padding: 5%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1); clear: both; overflow: hidden;}
+.admin-form label{ font-weight: normal; display: block; width: 100%;}
+
+.admin-form input[type="text"]{ border: solid 1px #d2d6de;
+    height: 34px;
+    padding: 6px 12px; margin-bottom: 0px!important; width: 100%;}
+
+
+.admin-form  .form-group{ margin-bottom: 0px!important;}
+
+.admin-form  #edit-submit{     background-color: #3c8dbc;
+        border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid  #367fa9; display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center; margin-top: 15px;}
 
 
 @media screen and (max-width:1199px) {

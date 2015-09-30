@@ -1,6 +1,7 @@
 <?php
 if (user_is_logged_in() == TRUE) {
     drupal_goto('dashboard');
+
 ?>
 
 

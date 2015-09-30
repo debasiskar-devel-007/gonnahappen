@@ -4,6 +4,8 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
 {
     if($form_id == 'user_login' )
     {
+
+
         $form['name']['#attributes']['class'][] = 'form-control';
         $form['name']['#attributes']['placeholder'] = 'User Name';
         $form['pass']['#attributes']['class'][] = 'form-control';
@@ -11,27 +13,40 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
         $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-block btn-flat';
         //$form['submit']['#value'] = 'btn';
         $form['actions']['submit']['#value'] = 'Sign In';
+        if(isset($_COOKIE['usernameval'])) $form['name']['#value'] = @$_COOKIE['usernameval'];
         //$form['submit']['#suffix'] = '<p>Some text to place after the submit button</p>';
         $form['submit']['#suffix'] = '
 
 
-                <div class="col-xs-4">';
+                <div>';
 
         $form['submit']['#preffix'] ='</div>
             </div> <div class="clearfix"></div>';
         $options = array();
         $options[1] = "Yes";
+        $options[0] = "No";
 
         $form ['rememberme'] = array(
             '#type' => 'checkbox',
             '#title' => t('rememberme'),
-            '#default_value' => t('No'),
-            '#value'=>5,
+            '#default_value' => 0,
+            /*'#value'=>5,*/
             '#options' => $options,
             //'#access' => !empty($account->picture->fid),
             '#description' => t('Check this box to delete your current picture.'),
         );
 
+        $form['#validate'][] = 'loginformvalidate';
+           // ini_set('session.cookie_lifetime', 0);
+           /* foreach ($_COOKIE as $key => $value) {
+                setcookie($key, $value, 0);
+            }
+            setcookie('_fnet_keepLogged', 0, time()+200000);
+        }else{
+            ini_set('session.cookie_lifetime', 2000000);
+            setcookie('_fnet_keepLogged', 1, time()+200000);
+        }*/
+//exit;
         $form['#action']= $GLOBALS['base_url'].'/user/login?destination=dashboard';
 
     }
@@ -49,7 +64,7 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
         $form['submit']['#suffix'] = '
 
 
-                </div> <div class="clearfix"> <div class="col-xs-4">';
+                </div> <div class="clearfix"> <div class="col-xs-12 forgot_xs12">';
 
         $form['submit']['#preffix'] ='</div>
             </div> <div class="clearfix"></div>';
@@ -59,4 +74,21 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
     }
 
 
+}
+
+
+function loginformvalidate($form, &$form_state){
+    //echo 456;
+
+    //var_dump($form_state['values']['rememberme']);
+    if ($form_state['values']['rememberme'] == 1) {
+       //echo $form_state['values']['name'];
+        setcookie("usernameval",$form_state['values']['name'], time() + 2592000, '/');
+    }
+    else{
+
+
+        unset($_COOKIE["usernameval"]);
+
+    }
 }

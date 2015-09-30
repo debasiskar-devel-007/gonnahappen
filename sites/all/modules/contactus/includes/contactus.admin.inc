@@ -9,14 +9,18 @@
  */
 function contactus_form($form, &$form_state, $contacts = NULL) {
     $form = array();
+	$form['#attributes']=array('class'=>'admin-form');
+	
 
     $form['first_name'] = array(
-        '#title' => t('First Name'),
+        '#title' => t('First Name title'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->first_name) ? $contacts->first_name : '',
         '#description' => t('First name .'),
         '#required' => TRUE,
         '#maxlength' => 255,
+		'#markup'=>"<div>asd</div>",
+		'#attributes'=>array('class'=>'form-control')
     );
 
     $form['last_name'] = array(
