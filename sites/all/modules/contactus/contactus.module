@@ -227,6 +227,8 @@ class contactusUIController extends EntityDefaultUIController {
     public function overviewForm($form, &$form_state) {
         
         //echo 656;
+		
+		$form['#prefix'] = '<div class="headingtext"><span>Contact List</span></div>';
 
         $header = array(
             //'contact_id' => array('data' => t('Contact  ID'), 'field' => 'contact_id'),
@@ -274,8 +276,8 @@ class contactusUIController extends EntityDefaultUIController {
                 'last_name' => l($contactus->last_name, 'contactus/' . $contactus->contact_id),
                 'enquiry_type' => l(show_enquiry_in_detail($contactus->enquiry_type), 'contactus/' . $contactus->contact_id),
                 'operations' =>
-                    l(t('View'), 'contactus/' . $contactus->contact_id) . ' ' .
-                    l(t('Edit'), ADMIN_CONTENT_CONTACTUS_MANAGE_URI . $contact_id ,array('query' => array('destination' => ADMIN_CONTENT_CONTACTUS_MANAGE_URI))) . ' ' .
+                    l(t('View'), 'contactus/' . $contactus->contact_id) . ' &nbsp;&nbsp;&nbsp;&nbsp;' .
+                    l(t('Edit'), ADMIN_CONTENT_CONTACTUS_MANAGE_URI . $contact_id ,array('query' => array('destination' => ADMIN_CONTENT_CONTACTUS_MANAGE_URI))) . ' &nbsp;&nbsp;&nbsp;&nbsp;' .
                     l(t('Delete'), ADMIN_CONTENT_CONTACTUS_MANAGE_URI . $contact_id . '/delete', array('attributes' => array('class' => array('contactus-delete-' . $contactus->contact_id), ), 'query' => array('destination' => ADMIN_CONTENT_CONTACTUS_URI))),
             );
         }

@@ -14,17 +14,20 @@ function theme_contactus_full($variables) {
   $image_data = array(
     'path' => drupal_get_path('module', 'lawmakers') . '/images/' . $lawmakers_image_size . '/' . $lawmakers->bioguide_id . '.jpg',
   );*/
+  $output .= '<div class="contact_meta main_contact">';
+  $output .= '<div class="headingtext"><span>Contact Details</span></div>';
 
-  $output .= '<div class="contact_meta">';
+
+
 
   // Lazy...
 
-  $output .= '<div class="contact-name">'  . trim($contacts->first_name)  . ' ' . trim($contacts->last_name) . '</div>';
-  $output .= '<div class="contact-email">'  . trim($contacts->email)  . '</div>';
-  $output .= '<div class="contact-phone">'  . trim($contacts->phone)  . '</div>';
-  $output .= '<div class="contact-comments">'  . trim($contacts->comments)  . '</div>';
-  $output .= '<div class="contact-postedon">'  . trim(date('m / d / Y , H:i',($contacts->postedon)))  . '</div>';
-
+  $output .= '<div class="contact-div"><label>Full Name :</label><span>'  . trim($contacts->first_name)  . ' ' . trim($contacts->last_name) . '</span></div>';
+  $output .= '<div class="contact-div"><label>Email :</label><span>'  . trim($contacts->email)  . '</span></div>';
+  $output .= '<div class="contact-div"><label>Phone Number :</label><span>'  . trim($contacts->phone)  . '</span></div>';
+  $output .= '<div class="contact-div"><label>Comments :</label><span>'  . trim($contacts->comments)  . '</span></div>';
+  $output .= '<div class="contact-div"><label>Contacts On :</label><span>'  . trim(date('m / d / Y , H:i',($contacts->postedon)))  . '</span></div>';
+  $output .='<div class="contact-div"><label>Enquiry Type :</label>';
   $enquiry_type=explode('|',$contacts->enquiry_type);
   //var_dump($enquiry_type);
   foreach($enquiry_type as $val){
@@ -33,20 +36,20 @@ function theme_contactus_full($variables) {
     if(strlen($val) > 1){
       //var_dump($val);
 
-      $output .= '<div class="contact-enquiry_type">'  . trim( str_replace('_'," ",$val))  . '</div>';
+      $output .= '<span>'  . trim( str_replace('_'," ",$val))  . '</span>,';
     }
 
 
 
   }
 
-  //$output .= '<div class="contact-enquiry_type">'  . trim($contacts->enquiry_type)  . '</div>';
+  $output .= '</div>';
   // $output .= '<div class="party">' . $lawmakers->party . ' ' . $lawmakers->state  . '  ' . $lawmakers->district . '</div>';
 
-  if (user_access('administer contact entities') && isset($contacts->contact_id)) {
-    $edit_link = '<ul class="tabs primary"><li>';
-    $edit_link .= l(t('Edit'), 'admin/content/contactus/manage/' . $contacts->contact_id, array('attributes' => array('class' => 'admin-edit-link')));
-    $edit_link .= '</li></ul>';
+  if (user_access('administer Contactus entities') && isset($contacts->contact_id)) {
+    //$edit_link = '<ul class="tabs primary"><li>';
+    $edit_link .= l(t('Edit'), 'admin/content/contactus/manage/' . $contacts->contact_id, array('attributes' => array('class' => 'admin-edit-link viewdeletebtn2')));
+    //$edit_link .= '</li></ul>';
     $output .= $edit_link;
   }
 

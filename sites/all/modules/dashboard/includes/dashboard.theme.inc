@@ -7,7 +7,7 @@
 /**
  * Theme lawmaker full page.
  */
-
+//print theme('links', array('links' => menu_navigation_links('menu-dashboard-menu'), 'attributes' => array('class'=> array('dashboard_link_list')) ));
 function theme_dashboard($variables) {
   $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
   $output = '
@@ -19,7 +19,7 @@ function theme_dashboard($variables) {
     <div class="row">
     <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12">
 
-    <ul class="dashboard_link_list">
+  <ul class="dashboard_link_list">
       <li>
       <a href="#">
       <img src="'.$themepath.'/images/d_icon1.png">
@@ -201,6 +201,7 @@ Policy
 
 
 </ul>
+
 
 </div>
 

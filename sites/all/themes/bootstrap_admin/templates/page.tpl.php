@@ -8,7 +8,7 @@
     <?php
     $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
 
-
+    global $base_url;
 
 
 
@@ -19,7 +19,7 @@
 
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="<?php echo $base_url?>/dashboard" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
           <!--  <span class="logo-mini"><b>A</b>LT</span>-->
             <!-- logo for regular state and mobile devices -->
@@ -144,17 +144,17 @@
         <!--<h2>Events Manager</h2>-->
         <nav class="navbar navbar-default toprightmenu" >
 
-    
+            <?php  print theme('links', array('links' => menu_navigation_links('main-menu'), 'attributes' => array('class'=> array('nav navbar-nav')) ));?>
    
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="dashboard">Dashboard</a></li>
+      <!--<ul class="nav navbar-nav">
+     <li class="active"><a href="<?php /* echo $base_url*/?>/dashboard">Dashboard</a></li>
         <li><a href="#">Homepage</a></li>
         <li><a href="#">Orders</a></li>
         <li><a href="#">Users</a></li>
         <li><a href="#">Menus</a></li>
          <li><a href="#">Help</a></li>
-      </ul>
-   
+      </ul>-->
+
 
 </nav>
 
@@ -205,6 +205,7 @@
             $menuarr[]=array('');
 
             function display_menu_tree($arr){
+                global $base_url;
                 //$catcounter=0;
                 foreach($arr as $key=>$value){
 
@@ -214,7 +215,7 @@
 
                         $menuarr[]=$value['link']['link_path'];
                         echo '<li class="treeview">
-                    <a href="'.$value['link']['link_path'].'">
+                    <a href="'.$base_url.'/'.$value['link']['link_path'].'">
                     <i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span> <i class="fa fa-angle-left pull-right"></i></a>';
                         echo ' <ul class="treeview-menu">';
 
@@ -224,8 +225,9 @@
 
 
                     }
+                    //print_r($menuarr);
 
-                   if(!in_array($value['link']['link_path'],$menuarr)) echo '<li><a href="'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                   if(!in_array($value['link']['link_path'],$menuarr)) echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
                 }
             }
 

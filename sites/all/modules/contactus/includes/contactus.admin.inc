@@ -8,18 +8,22 @@
  * Implements hook_form().
  */
 function contactus_form($form, &$form_state, $contacts = NULL) {
-    $form = array();
-	$form['#attributes']=array('class'=>'admin-form');
-	
 
+  /*  echo '<div style="color:red;">';*/
+    $form = array();
+    $heading= isset($contacts->contact_id) ? t("Edit contact") : t("Add Contact");
+	$form['#attributes']=array('class'=>'admin-form');
+
+   /* $form['prefix']='<div style="color:red;">';*/
     $form['first_name'] = array(
-        '#title' => t('First Name title'),
+        '#title' => t('First Name'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->first_name) ? $contacts->first_name : '',
         '#description' => t('First name .'),
         '#required' => TRUE,
         '#maxlength' => 255,
 		'#markup'=>"<div>asd</div>",
+        '#prefix' => '<div class="headingtext"><span>'.$heading.'</span></div>',
 		'#attributes'=>array('class'=>'form-control')
     );
 
@@ -113,8 +117,14 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
             '#type' => 'submit',
             '#value' => isset($contacts->contact_id) ? t('Update contact us') : t('Save Contact'),
         ),
+
+
+
+
+
         'delete_link' => array(
-            '#markup' => isset($contacts->contact_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->contact_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->contact_id), 'class' => array('button remove')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
+            '#markup' => isset($contacts->contact_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->contact_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->contact_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
+
     return $form;
 }
 
