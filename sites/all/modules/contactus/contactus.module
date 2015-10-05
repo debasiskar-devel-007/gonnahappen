@@ -85,6 +85,14 @@ function contactus_menu() {
         'access arguments' => array('administer contact entities'),
         'type' => MENU_NORMAL_ITEM,
     );
+    $items['contact-us'] = array(
+        'title' => 'Contact Us',
+        'access arguments' => array('anonymous user access'),
+        'page callback' => 'contactus_frontend',
+        //'type' => MENU_NORMAL_ITEM,
+    );
+
+
 
     return $items;
 }
@@ -100,6 +108,12 @@ function contactus_theme() {
             'variables' => array('contact' => NULL),
             'file' => 'includes/contactus.theme.inc',
         ),
+        'contactus_frontend' => array(
+            'variables' => array('contactus' => NULL),
+            'file' => 'includes/contactus_frontend.theme.inc',
+        ),
+
+
     );
 }
 
@@ -197,6 +211,10 @@ function contactus_permission() {
         'view contact entities' => array(
             'title' => t('View contact Entity'),
             'description' => t('Allows a user to view the contact entities.'),
+        ),
+        'anonymous user access' => array(
+            'title' => t('Anonymous User Access'),
+            'description' => t('Allows a  anonymoususer to submit  contact us form'),
         ),
 
     );
@@ -461,3 +479,26 @@ function contactus_delete_multiple(array $contact__ids) {
     entity_get_controller('contactus')->delete($contact__ids);
 }
 
+function contactus_custom_theme() {
+    // Allow the user to request a particular theme via a query parameter.
+    //if (isset($_GET['theme'])) {
+    if( current_path()=='contact-us')
+        return 'frontendtheme';
+    //}
+}
+
+function contactus_frontend()
+{
+    //echo 1;
+    global $base_url;
+    //$elements = entity_form("contactus");
+   // $form = drupal_render($elements);
+    //var_dump($form);
+    //var_dump( entity_form('contactus'));
+    $contact_output = theme('contactus_frontend', array());
+    //var_dump($contact);
+    //var_dump($contact_output);
+    //exit;
+    return $contact_output;
+
+}

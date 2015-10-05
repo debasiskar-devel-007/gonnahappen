@@ -184,7 +184,7 @@
             <?php
             $menu=(menu_tree_all_data('navigation'));
 
-             var_dump(count($menu));
+             //var_dump(count($menu));
             // exit;
 
             if(count($menu)>0){

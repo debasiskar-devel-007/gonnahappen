@@ -496,3 +496,6 @@ html.js fieldset.collapsible .fieldset-legend a{color: #000;}
 
 .login-box-msgtxt span{font-size: 16px; color: #3c8dbc;}
 td:last-child a {color: #0068ba;}
+
+.demo .word2,
+.line2 { color: green; }

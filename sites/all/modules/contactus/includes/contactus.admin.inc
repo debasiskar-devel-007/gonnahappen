@@ -54,14 +54,6 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#maxlength' => 255,
     );
 
-    $form['comments'] = array(
-        '#title' => t('comments'),
-        '#type' => 'textfield',
-        '#default_value' => isset($contacts->comments) ? $contacts->comments : '',
-        '#description' => t('comments.'),
-        '#required' => TRUE,
-        '#maxlength' => 255,
-    );
 
     $form['postedon'] = array(
         '#title' => t('postedon'),
@@ -88,6 +80,8 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
     $options["Ticket_Sales"] = "Ticket Sales";
     $options["Tournament_Enquiry"] = "Tournament Enquiry";
     $options["General_Question"] = "General Question ";
+    $options["Partner_or_Affiliate_Inquiries"] = "Partner or Affiliate Inquiries ";
+    $options["Advertising_inquires_or_questions"] = "Advertising inquires or questions ";
 
 
     $form['enquiry_type'] = array(
@@ -98,6 +92,20 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#required' => TRUE,
         '#default_value' => isset($contacts->enquiry_type) ? explode('|',$contacts->enquiry_type) : ''
     );
+
+
+
+    $form['comments'] = array(
+        '#title' => t('comments'),
+        '#type' => 'textarea',
+        '#default_value' => isset($contacts->comments) ? $contacts->comments : '',
+        '#description' => t('comments.'),
+        '#required' => TRUE,
+        '#maxlength' => 255,
+    );
+
+
+
     $form['search_tag'] = array(
         '#title' => t('search_tags'),
         '#type' => 'hidden',

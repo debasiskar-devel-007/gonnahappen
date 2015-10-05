@@ -10,6 +10,28 @@
 //print theme('links', array('links' => menu_navigation_links('menu-dashboard-menu'), 'attributes' => array('class'=> array('dashboard_link_list')) ));
 function theme_dashboard($variables) {
   $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
+    $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
+
+    $menu= menu_tree_all_data('menu-dashboard-menu');
+   // var_dump($menu);
+    $html='';
+    if(count($menu>0))
+    {
+        foreach($menu as $key=>$val) {
+            $link_path=$val["link"]["link_path"];
+            $link_titile=$val["link"]["link_title"];
+            $link_mlid=$val['link']['mlid'];
+            $html .= '<li class="demo" >
+    <a href="'.$link_path.'">
+        <img mlid="'.$link_mlid.'" src="' . $themepath . '/images/d_icon2.png"><span class="demoss">'.
+
+                $link_titile.
+                '</span></a>
+</li>';
+
+
+        }    }
+
   $output = '
 
 <div class="dashboard_wrapper">
@@ -19,184 +41,8 @@ function theme_dashboard($variables) {
     <div class="row">
     <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12">
 
-  <ul class="dashboard_link_list">
-      <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon1.png">
-      Banner Manager 
-      </a>
-      </li>
+  <ul class="dashboard_link_list">'.$html.'
 
-      <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon2.png">
-      Events Manager 
-
-      </a>
-      </li>
-
-       <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon3.png">
-      Tournament Manager 
-     </a>
-      </li>
-
-
-        <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon4.png">
-      Artist Manager 
-
-     </a>
-      </li>
-
-
-              <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon5.png">
-       User Manager 
-
-     </a>
-      </li>
-
-
-              <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon6.png">
-
-      Affiliate Manager 
-
-     </a>
-      </li>
-
-
-
-              <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon7.png">
-Ads Manager 
-
-
-     </a>
-      </li>
-
-
-           <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon8.png">
-
-Contact Manager 
-
-     </a>
-      </li>
-
-
-          <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon9.png">
-
-      Talent Manager 
-
-
-     </a>
-      </li>
-
-
-          <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon10.png">
-Auto Email Manager 
-
-
-
-     </a>
-      </li>
-
-
-          <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon11.png">
-Media
-
-
-
-     </a>
-      </li>
-
-                <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon12.png">
-Comments
-
-
-
-     </a>
-      </li>
-
-
-         <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon13.png">
-Products
-
-
-
-     </a>
-      </li>
-
-
-         <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon14.png">
-FAQ&acute;s
-
-
-
-     </a>
-      </li>
-
-
-     <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon15.png">
-News Blog 
-
-
-
-     </a>
-      </li>
-   <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon16.png">
-
-      Terms and Condition 
-
-     </a>
-      </li>
-
- <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon17.png">
-
-
-
-      Privacy Statement 
-
-     </a>
-      </li>
-
-       <li>
-      <a href="#">
-      <img src="'.$themepath.'/images/d_icon18.png">
-
-
-Return and Shipping
-Policy 
-
-
-     </a>
-      </li>
 
 
 
