@@ -495,6 +495,7 @@ function contactus_frontend()
    // $form = drupal_render($elements);
     //var_dump($form);
     //var_dump( entity_form('contactus'));
+    
     $contact_output = theme('contactus_frontend', array());
     //var_dump($contact);
     //var_dump($contact_output);

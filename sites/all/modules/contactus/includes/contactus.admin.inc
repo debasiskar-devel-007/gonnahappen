@@ -13,6 +13,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
     $form = array();
     $heading= isset($contacts->contact_id) ? t("Edit contact") : t("Add Contact");
 	$form['#attributes']=array('class'=>'admin-form');
+    //echo current_path();
 
    /* $form['prefix']='<div style="color:red;">';*/
     $form['first_name'] = array(
@@ -133,6 +134,17 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         'delete_link' => array(
             '#markup' => isset($contacts->contact_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->contact_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->contact_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
 
+    if(current_path() == 'contact-us')
+    {
+        $form['first_name']['#attributes']['placeholder'] =t('First Name');
+        $form['last_name']['#attributes']['placeholder'] =t('Last Name');
+        $form['email']['#attributes']['placeholder'] =t('Email');
+        $form['phone']['#attributes']['placeholder'] =t('Phone');
+        $form['comments']['#attributes']['placeholder'] =t('Comments');
+        $form['actions']['submit']['#value']='SUBMIT INQUIRY';
+    }
+
+
     return $form;
 }
 
@@ -142,8 +154,9 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
 function contactus_form_validate($form, &$form_state) {
 
 
-    $mail = $form_state['values']['email'];
+     $mail = $form_state['values']['email'];
     if (!valid_email_address($mail)) {
+
         form_set_error('[email]', t('The email address appears to be invalid.'));
     }
 
@@ -154,20 +167,71 @@ function contactus_form_validate($form, &$form_state) {
 /**
  * Implements hook_form_submit().
  */
-function contactus_form_submit($form, &$form_state) {
+function contactus_form_submit($form, &$form_state)
+{
+    global $base_url;
 
-    $form_state['values']['enquiry_type']=implode("|",$form_state['values']['enquiry_type']);
-    $form_state['values']['search_tag']=$form_state['values']['enquiry_type'].$form_state['values']['first_name'].$form_state['values']['last_name'];
-    // var_dump($form_state['values']);
-    // exit;
+    $form_state['values']['enquiry_type'] = implode("|", $form_state['values']['enquiry_type']);
+    $form_state['values']['search_tag'] = $form_state['values']['enquiry_type'] . $form_state['values']['first_name'] . $form_state['values']['last_name'];
+    //print_r($form_state['values']);echo '<br/>========';exit;
+    // $form['submit']['#attributes']['onclick'] = "popup()";
     $contactus = entity_ui_form_submit_build_entity($form, $form_state);
+
+    //echo current_path();
+
+    if (current_path() == 'contact-us'){
+
+
+        $entity_type = 'contactus';
+        $entity = entity_create($entity_type, array());
+
+        $entity->first_name = $form_state['values']['first_name'];
+
+
+        $entity->last_name = $form_state['values']['last_name'];
+
+        $entity->email = $form_state['values']['email'];
+        $entity->phone = $form_state['values']['phone'];
+        $entity->postedon = $form_state['values']['postedon'];
+        $entity->comments = $form_state['values']['comments'];
+        $entity->enquiry_type = $form_state['values']['enquiry_type'];
+        $entity->search_tag = $form_state['values']['search_tag'];
+
+
+        $entity->save();
+
+        $form_state['redirect'] = url($base_url."/".current_path()."?submit=saved");
+
+
+    }
+else{
+    // exit;
     $contactus->save();
+//exit;
     drupal_set_message(t('@first_name contact has been saved.', array('@first_name' => $contactus->first_name)));
     // $form_state['redirect'] = 'admin/content/lawmakers';
     $form_state['redirect'] = 'contactus/' . $contactus->contact_id;
 
 }
 
+    //echo $_GET['submit'];exit;
+
+
+}
+/*function popup()
+{
+    $html='<div id="popup1" class="overlay">
+	<div class="popup">
+		<h2>Here i am</h2>
+		<a class="close" href="#">×</a>
+		<div class="content">
+Thanks for pop me out of that button, but now i\'m done so you can close this window.
+		</div>
+	</div>
+</div>';
+    return $html;
+
+}*/
 /**
  * Confirmation before bulk deleting lawmakers.
  */
