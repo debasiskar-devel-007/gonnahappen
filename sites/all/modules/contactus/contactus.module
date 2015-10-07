@@ -378,6 +378,11 @@ class contactusUIController extends EntityDefaultUIController {
 
 }
 
+
+
+
+
+
 function show_enquiry_in_detail($enqueystring){
 
     return $enqueystring=str_replace(array('|','0','_'),array(' ','',' '),$enqueystring);

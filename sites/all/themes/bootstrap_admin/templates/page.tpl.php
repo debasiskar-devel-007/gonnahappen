@@ -61,12 +61,12 @@
 </li>
                     <?php if (user_is_logged_in() == TRUE) {
                         global $user;
-                       // print_r($user);
+                      // var_dump($user->roles);
                         global $base_url;
                        // echo $user->name;
                         $fid = $user->picture;
                         $create_time=strtoupper(date("M j, Y",$user->created));
-                        $user_role=$user->roles[4];
+                        $user_role=@$user->roles[4];
                         //var_dump($fid);
                         $file = file_load($fid);
                         //var_dump($file);
@@ -202,7 +202,7 @@
 
             global $catcounter;
             $catcounter =0;
-            $menuarr[]=array('');
+            $menuarr[]=' ';
 
             function display_menu_tree($arr){
                 global $base_url;
@@ -215,7 +215,7 @@
 
                         $menuarr[]=$value['link']['link_path'];
                         echo '<li class="treeview">
-                    <a href="'.$base_url.'/'.$value['link']['link_path'].'">
+                    <a href="javascript:void(0)">
                     <i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span> <i class="fa fa-angle-left pull-right"></i></a>';
                         echo ' <ul class="treeview-menu">';
 
@@ -227,7 +227,7 @@
                     }
                     //print_r($menuarr);
 
-                   if(!in_array($value['link']['link_path'],$menuarr)) echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                   if(!in_array($value['link']['link_path'],@$menuarr)) echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
                 }
             }
 
