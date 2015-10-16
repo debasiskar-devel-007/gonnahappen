@@ -147,3 +147,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', end
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
+.no_data{color:#0068ba!important;font-size:15px;}

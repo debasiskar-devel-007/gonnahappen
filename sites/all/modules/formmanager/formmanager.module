@@ -50,7 +50,31 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
         $form['#action']= $GLOBALS['base_url'].'/user/login?destination=dashboard';
 
     }
+    //echo current_path();exit;
+if($form_id == 'banner_form' ){
 
+  $cur_path=current_path();
+    if(current_path()=='admin/content/banner/add' || strpos($cur_path,'admin/content/banner/manage') !== false ) {
+        $form['banner_image']['#access'] = FALSE;
+    }
+   else{
+      // echo current_path();exit;
+       //$ar=arg();
+      // if($ar[0]=='banner') {
+
+           $form['banner_name']['#access'] = FALSE;
+           $form['banner_help_text']['#access'] = FALSE;
+           $form['banner_status']['#access'] = FALSE;
+           $form['banner_upload_time']['#access'] = FALSE;
+           $heading = t("Add Banner Image");
+           $form['banner_name'] = array(
+               '#prefix' => '<div class="headingtext"><span>' . $heading . '</span></div>',
+               /*'#attributes'=>array('class'=>'form-control')*/
+           );
+      // }
+
+    }
+}
     if($form_id == 'user_pass')
     {
         $form['name']['#attributes']['class'][] = 'form-control';

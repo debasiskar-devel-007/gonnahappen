@@ -7,89 +7,89 @@
 /**
  * Implements hook_form().
  */
-function event_form($form, &$form_state, $contacts = NULL) {
-  $form = array();
+function event_form($form, &$form_state, $event = NULL) {
+    $form = array();
+    $heading= isset($event->event_id) ? t("Edit Event") : t("Add Event");
+    $form['#attributes']=array('class'=>'admin-form');
+    $form['#attributes']['enctype'] = 'multipart/form-data';
 
-  $form['event_name'] = array(
+    $form['event_name'] = array(
     '#title' => t('Event Name'),
     '#type' => 'textfield',
-    '#default_value' => isset($contacts->event_name) ? $contacts->event_name : '',
-    '#description' => t('Event name .'),
+    '#default_value' => isset($event->event_name) ? $event->event_name : '',
     '#required' => TRUE,
     '#maxlength' => 255,
+    '#prefix' => '<div class="headingtext"><span>'.$heading.'</span></div>',
   );
-
-  $form['location'] = array(
-    '#title' => t('Location'),
-    '#type' => 'textfield',
-    '#default_value' => isset($contacts->location) ? $contacts->location : '',
-    '#description' => t('Location.'),
-    '#required' => TRUE,
-    '#maxlength' => 255,
-  );
-
-    /* $form['email'] = array(
-        '#title' => t('Email'),
-        '#type' => 'textfield',
-        '#default_value' => isset($contacts->email) ? $contacts->email : '',
-        '#description' => t('Email.'),
+    $form['event_desc'] = array(
+        '#title' => t('Event Decription'),
+        '#type' => 'textarea',
+        '#default_value' => isset($event->event_name) ? $event->event_name : '',
         '#required' => TRUE,
-        '#maxlength' => 255,
-      );
-
-     $form['phone'] = array(
-        '#title' => t('phone'),
-        '#type' => 'textfield',
-        '#default_value' => isset($contacts->phone) ? $contacts->phone : '',
-        '#description' => t('phone.'),
+/*        '#maxlength' => 255,*/
+    );
+    $form['event_banner'] = array(
+        '#title' => t('Event Banner'),
+        '#type' => 'managed_file',
+        '#name' => 'event_banner',
+        '#default_value' => isset($event->event_banner) ? $event->event_banner : '',
+        '#description' => t(''),
+/*        '#required' => TRUE,*/
+        '#upload_validators' => array(
+            'file_validate_extensions' => array('gif png jpg jpeg'),
+            // Pass the maximum file size in bytes
+            'file_validate_size' => array(MAX_FILE_SIZE*1024*1024),
+        ),
+        '#upload_location' => 'public://event/',
+    );
+    $form['featured_news_banner'] = array(
+        '#title' => t('Featured New Banner'),
+        '#type' => 'managed_file',
+        '#name' => 'featured_news_banner',
+        '#default_value' => isset($event->featured_news_banner) ? $event->featured_news_banner : '',
+        '#description' => t(''),
+        /*        '#required' => TRUE,*/
+        '#upload_validators' => array(
+            'file_validate_extensions' => array('gif png jpg jpeg'),
+            // Pass the maximum file size in bytes
+            'file_validate_size' => array(MAX_FILE_SIZE*1024*1024),
+        ),
+        '#upload_location' => 'public://event/featured/',
+    );
+    $form['featured_news_content'] = array(
+        '#title' => t('Featured News Content'),
+        '#type' => 'textarea',
+        '#default_value' => isset($event->event_name) ? $event->event_name : '',
         '#required' => TRUE,
-        '#maxlength' => 255,
-      );
+/*        '#maxlength' => 255,*/
+    );
 
-    $form['comments'] = array(
-        '#title' => t('comments'),
-        '#type' => 'textfield',
-        '#default_value' => isset($contacts->comments) ? $contacts->comments : '',
-        '#description' => t('comments.'),
-        '#required' => TRUE,
-        '#maxlength' => 255,
-      );
-
-    $form['postedon'] = array(
-        '#title' => t('postedon'),
+    $form['event_create_time'] = array(
+        '#title' => t('Event Create Time'),
         '#type' => 'hidden',
-        '#default_value' => isset($contacts->postedon) ? $contacts->postedon : '',
-        '#description' => t('postedon.'),
+        '#default_value' => isset($event->event_create_time) ? $event->event_create_time : '',
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
         '#value'=>time()
-      );
+    );
 
-    $form['enquiry_type'] = array(
-        '#title' => t('enquiry_type'),
-        '#type' => 'textfield',
-        '#default_value' => isset($contacts->enquiry_type) ? $contacts->enquiry_type : '',
-        '#description' => t('enquiry_type.'),
-        '#required' => TRUE,
-        '#maxlength' => 255,
-      );*/
-
-  /*  $options = array();
-    $options["Site_Visitor"] = "Site Visitor";
-    $options["Event_Poster"] = "Event Poster";
-    $options["Ticket_Sales"] = "Ticket Sales";
-    $options["Tournament_Enquiry"] = "Tournament Enquiry";
-    $options["General_Question"] = "General Question ";
-
-
-    $form['enquiry_type'] = array(
-        '#title' => t('Enquiry Type'),
-        '#type' => 'checkboxes',
+    $options = array();
+    $options["checked"] = 1;
+    $form['event_status'] = array(
+        '#title' => t('Event Status'),
+        '#type' => 'checkbox',
         '#description' => t(''),
-        '#options' => $options,
-        '#required' => TRUE,
-        '#default_value' => isset($contacts->enquiry_type) ? explode('|',$contacts->enquiry_type) : ''
-    );*/
+        '#default_value'=>isset($event->event_status) ? $event->event_status : 0,
+    );
+    $form['photo_video'] = array(
+        '#title' => t('Photo Video'),
+        '#type' => 'hidden',
+        '#name' => 'photo_video',
+        '#default_value' =>'',
+        '#description' => t(''),
+     );
+
     $form['search_tag'] = array(
         '#title' => t('search_tags'),
         '#type' => 'hidden',
@@ -98,19 +98,15 @@ function event_form($form, &$form_state, $contacts = NULL) {
         //'#required' => TRUE,
         //'#default_value' => array("1", "2", "3","4")
     );
-
-
-
-    field_attach_form('event', $contacts, $form, $form_state);
-
+    field_attach_form('event', $event, $form, $form_state);
   $form['actions'] = array(
     '#type' => 'actions',
     'submit' => array(
       '#type' => 'submit',
-      '#value' => isset($contacts->event_id) ? t('Update Event') : t('Save Event'),
+      '#value' => isset($event->event_id) ? t('Update Event') : t('Save Event'),
     ),
     'delete_link' => array(
-      '#markup' => isset($contacts->event_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->event_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->event_id), 'class' => array('button remove')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
+      '#markup' => isset($event->event_id) ? l(t('Delete'), 'admin/content/event/manage/' . $event->event_id . '/delete', array('attributes' => array('id' => array('event-delete-' . $event->event_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/event'))) : ''));
   return $form;
 }
 
@@ -134,35 +130,35 @@ function event_form_validate($form, &$form_state) {
  */
 function event_form_submit($form, &$form_state) {
 
-    $form_state['values']['enquiry_type']=implode("|",$form_state['values']['enquiry_type']);
-    $form_state['values']['search_tag']=$form_state['values']['enquiry_type'].$form_state['values']['first_name'].$form_state['values']['last_name'];
+    $form_state['values']['search_tag']=$form_state['values']['event_name'];
    // var_dump($form_state['values']);
    // exit;
-    $contactus = entity_ui_form_submit_build_entity($form, $form_state);
-    $contactus->save();
-  drupal_set_message(t('@first_name contact has been saved.', array('@first_name' => $contactus->event_name)));
+    $event = entity_ui_form_submit_build_entity($form, $form_state);
+    $event->save();
+  drupal_set_message(t('@event_name event has been saved.', array('@event_name' => $event->event_name)));
   // $form_state['redirect'] = 'admin/content/lawmakers';
-  $form_state['redirect'] = 'event/' . $contactus->event_id;
+  $form_state['redirect'] = 'event/' . $event->event_id;
 
 }
 
 /**
  * Confirmation before bulk deleting lawmakers.
  */
-function event_bulk_delete($form, &$form_state, $contact_ids) {
-    $contact_ids = explode('|', $contact_ids);
-  $contacts = contactus_load_multiple($contact_ids);
+function event_bulk_delete($form, &$form_state, $event_ids) {
+
+    $event_ids = explode('|', $event_ids);
 
   $form = array();
    //$form_state['contact_ids'] = $contact_ids;
     //var_dump($form_state['contact_ids']);
-    foreach($contact_ids as $cid){
+    foreach($event_ids as $cid){
 
-        $form_state['contact_ids'][]=str_replace('contact_id-','',$cid);
+        $form_state['event_ids'][]=str_replace('event_id-','',$cid);
 
     }
+    $events = event_load_multiple($form_state['event_ids']);
 
-    //var_dump($form_state['contact_ids']);
+ //   var_dump($form_state['event_ids']);exit;
 
   $variables = array(
     'type' => 'ul',
@@ -171,26 +167,33 @@ function event_bulk_delete($form, &$form_state, $contact_ids) {
     'attributes' => array(),
   );
 
-  foreach ($contacts as $contact) {
-    echo $variables['items'][] = $contact->event_name;
+  foreach ($events as $event) {
+     $variables['items'][] = $event->event_name;
   }
+    $form['#prefix'] ='<div class="contact_meta main_confirmation confirm-delet">';
+    $form['#suffix'] ='</div>';
 
   $form['summary'] = array(
     '#markup' => theme_item_list($variables),
   );
 
-  return confirm_form($form, t('Delete all lawmakers?'), 'admin/content/contactus', t('Placeholder description'), t('Delete all'), t('Cancel'));
+    $cancel=''.t("Cancel");
+    $yes=t("Delete all");
+    $heading='<div class="headingconfirmtext"><span>'.t("Do You want to delete these items ?").'</span></div>';
+    return confirm_form($form,t('Delete all events ?'),'admin/content/event',$heading ,$yes , $cancel);
+
+    //return confirm_form($form, t('Delete all events?'), 'admin/content/event', t('Placeholder description'), t('Delete all'), t('Cancel'));
 }
 
 /**
  * Implements hook_submit().
  */
 function event_bulk_delete_submit($form, &$form_state) {
-  $contact_ids = $form_state['contact_ids'];
+  $event_ids = $form_state['event_ids'];
     //var_dump($contact_ids);
     //exit;
-    event_delete_multiple($contact_ids);
+    event_delete_multiple($event_ids);
 
-  drupal_set_message(t('contact deleted'));
-  drupal_goto('admin/content/contactus');
+  drupal_set_message(t('event deleted'));
+  drupal_goto('admin/content/event');
 }

@@ -1,10 +1,10 @@
 <?php
 
 function bootstrap_admin_form_element($variables) {
-	
+
 	//var_dump($variables);
-	
-	
+
+
     $output = '';
 
 
@@ -40,23 +40,23 @@ function bootstrap_admin_form_element($variables) {
                   </div></div></div>';
 
     }
-	
+
 	else{
-		
+
 		if($variables['element']['#type']!='checkbox')
 
     $output = '<div class="form-group">
 			<label for="exampleInputEmail1">'.$variables['element']['#title'].'</label>
 	'.$variables['element']['#children'].' <div>'.$variables['element']['#description'].'</div></div>';
-	
-	if($variables['element']['#type']=='checkbox') 
-		
+
+	if($variables['element']['#type']=='checkbox')
+
 	 $output = '<div class="checkbox">
 			<label >'.$variables['element']['#children']. $variables['element']['#title'].'</label>
-			
-			
+
+
 			</div>';
-		
+
 	}
 
     // echo strlen($variables['element']['#name']);
@@ -85,9 +85,9 @@ function bootstrap_admin_form_element($variables) {
 }
 
 
-	
+
 	function bootstrap_admin_form_elementff($variables) {
-		
+
 		$output = '';
 
 
@@ -96,15 +96,15 @@ function bootstrap_admin_form_element($variables) {
     $output = '<div class="form-group">
 			<label for="exampleInputEmail1">'.$variables['element']['#title'].'</label>
 	'.$variables['element']['#children'].' <div>'.$variables['element']['#description'].'</div></div>';
-	
-	if($variables['element']['#type']=='checkbox') 
-		
+
+	if($variables['element']['#type']=='checkbox')
+
 	 $output = '<div class="checkbox">
 			<label >'.$variables['element']['#children']. $variables['element']['#title'].'</label>
-			
-			
+
+
 			</div>';
-	
+
 	 if(is_array(form_get_errors())){
 
 
@@ -116,16 +116,16 @@ function bootstrap_admin_form_element($variables) {
             $output .= '<div class="messages error messages-inline">' . @$errors[$variables['element']['#name']] . '</div>';
         }
     }
-		
+
 		//var_dump($variables);
-		
+
 		return $output;
 	}
 
 
 function bootstrap_admin_preprocess_table(&$variables) {
-	
-	
+
+
   $variables['attributes']['class'] = array('table', 'table-bordered', 'table-hover', 'dataTable');
 }
 

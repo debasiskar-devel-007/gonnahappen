@@ -11,7 +11,7 @@ define('TOTAL_ITEMS_PER_PAGE_CONTACT', 6);
 // Admin uri links.
 define('ADMIN_CONTENT_CONTACTUS_MANAGE_URI', '/admin/content/contactus/manage/');
 define('ADMIN_CONTENT_CONTACTUS_EDIT_URI', 'admin/content/contact/edit/');
-define('ADMIN_CONTENT_CONTACTUS_URI', '/admin/content/contactus');
+define('ADMIN_CONTENT_CONTACTUS_URI', '/admin/content/contactus/');
 
 /**
  * Implements hook_entity_info().
@@ -42,8 +42,8 @@ function contactus_entity_info() {
             'contact' => array(
                 'label' => 'Contacts',
                 'admin' => array(
-                    'path' => 'admin/structure/contact/manage',
-                    'access arguments' => array('administer contact'),
+                    'path' => 'admin/structure/contactus/manage',
+                    'access arguments' => array('administer contact entities'),
                 ),
             ),
         ),
@@ -58,6 +58,11 @@ function contactus_entity_info() {
 
 function contactus_menu() {
     $items = array();
+    $items['admin/structure/contactus'] = array(
+        'title' => 'contacus Fields',
+        'access arguments' => array('administer contact entities'),
+        'type' => MENU_NORMAL_ITEM,
+    );
 
     $items['contactus/%contactus'] = array(
         'title' => 'Contact Us',
@@ -72,20 +77,15 @@ function contactus_menu() {
         'access arguments' => array('administer contact entities'),
     );*/
 
-    $items['admin/content/contactus/bulk/delete/%'] = array(
-        'title' => 'Bulk Delete contacts',
+   $items['admin/content/contactus/bulk/delete/%'] = array(
+        'title' => 'Delete all contacts',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('contactus_bulk_delete', 5),
         'access arguments' => array('administer contact entities'),
+       'access callback' => TRUE,
         'file' => 'includes/contactus.admin.inc',
     );
-
-    $items['admin/structure/contactus'] = array(
-        'title' => 'contactus Fields',
-        'access arguments' => array('administer contact entities'),
-        'type' => MENU_NORMAL_ITEM,
-    );
-    $items['contact-us'] = array(
+     $items['contact-us'] = array(
         'title' => 'Contact Us',
         'access arguments' => array('anonymous user access'),
         'page callback' => 'contactus_frontend',
@@ -194,7 +194,7 @@ class contactController extends EntityAPIController {
 
 
 function contactus_access_callback() {
-    if (user_is_anonymous() && !user_access('administer Contactus entities')) {
+    if (user_is_anonymous() && !user_access('administer contact entities')) {
         return FALSE;
     }
     else {
@@ -204,7 +204,7 @@ function contactus_access_callback() {
 
 function contactus_permission() {
     return array(
-        'administer Contactus entities' => array(
+        'administer contact entities' => array(
             'title' => t('Administer contact us Entities'),
             'description' => t('Allows a user to administer contact us entities'),
         ),
@@ -234,7 +234,7 @@ class contactusUIController extends EntityDefaultUIController {
         $items[$this->path]['title'] = t('Contact us');
         $items[$this->path]['description'] = t('Manage Contact us, including fields.');
         $items[$this->path]['access callback'] = 'contactus_access_callback';
-        $items[$this->path]['access arguments'] = array('administer Contact us entities');
+        $items[$this->path]['access arguments'] = array('administer contact entities');
         $items[$this->path]['type'] = MENU_LOCAL_TASK;
         return $items;
     }
@@ -247,6 +247,7 @@ class contactusUIController extends EntityDefaultUIController {
         //echo 656;
 		
 		$form['#prefix'] = '<div class="headingtext"><span>Contact List</span></div>';
+        $add=' <span class="addimage" style="margin-bottom:5px;">'.l(t('Add Contact'), ADMIN_CONTENT_CONTACTUS_URI . 'add' ,array('query' => array('destination' => ADMIN_CONTENT_CONTACTUS_URI))).'</span>';
 
         $header = array(
             //'contact_id' => array('data' => t('Contact  ID'), 'field' => 'contact_id'),
@@ -264,6 +265,7 @@ class contactusUIController extends EntityDefaultUIController {
 
         if (!empty($search_term)) {
 
+            //var_dump($search_term);
             //var_dump($search_term);
             $query->propertyCondition('search_tag', '%' . $search_term . '%', 'like');
 
@@ -292,7 +294,7 @@ class contactusUIController extends EntityDefaultUIController {
                 //'contact_id' => l($contactus->contact_id, 'contactus/' . $contactus->contact_id),
                 'first_name' => l($contactus->first_name, 'contactus/' . $contactus->contact_id),
                 'last_name' => l($contactus->last_name, 'contactus/' . $contactus->contact_id),
-                'enquiry_type' => l(show_enquiry_in_detail($contactus->enquiry_type), 'contactus/' . $contactus->contact_id),
+                'enquiry_type' => l(contactus_show_enquiry_in_detail($contactus->enquiry_type), 'contactus/' . $contactus->contact_id),
                 'operations' =>
                     l(t('View'), 'contactus/' . $contactus->contact_id) . ' &nbsp;&nbsp;&nbsp;&nbsp;' .
                     l(t('Edit'), ADMIN_CONTENT_CONTACTUS_MANAGE_URI . $contact_id ,array('query' => array('destination' => ADMIN_CONTENT_CONTACTUS_MANAGE_URI))) . ' &nbsp;&nbsp;&nbsp;&nbsp;' .
@@ -344,8 +346,10 @@ class contactusUIController extends EntityDefaultUIController {
             '#options' => $options,
             '#attributes' => array('class' => array('entity-sort-table')),
             '#empty' => t('There are no contacts.'),
+            '#prefix' =>$add,
         );
 		$form['pager'] = array('#theme' => 'pager');
+        drupal_set_title('Contact Us  List');
 
         return $form;
     }
@@ -360,13 +364,18 @@ class contactusUIController extends EntityDefaultUIController {
         if (!empty($values['entities'])) {
             foreach ($values['entities'] as $index => $value) {
                 if (!empty($value)) {
-                    $contact_ids[] = str_replace('$contact_ids-', '', $value);
+                   echo $value;
+                    $contact_ids[] = str_replace('contact_id-', '', $value);
                 }
             }
-
+          //  print_r($contact_ids);exit;
             switch ($values['operations']) {
                 case 'delete':
-                    drupal_goto('admin/content/contactus/bulk/delete/' . implode('|', $contact_ids));
+                    contactus_delete_multiple($contact_ids);
+
+                    drupal_set_message(t('contact deleted'));
+
+                    // drupal_goto('admin/content/contactus/bulk/delete/' . implode('|', $contact_ids));
                     break;
             }
         }
@@ -381,9 +390,7 @@ class contactusUIController extends EntityDefaultUIController {
 
 
 
-
-
-function show_enquiry_in_detail($enqueystring){
+function contactus_show_enquiry_in_detail($enqueystring){
 
     return $enqueystring=str_replace(array('|','0','_'),array(' ','',' '),$enqueystring);
 }
@@ -508,3 +515,19 @@ function contactus_frontend()
     return $contact_output;
 
 }
+
+function _examp_form_confirm(&$form_state) {
+    $desc = 'The following new items will be created ... your code here';
+    // Tell the submit handler to process the form
+    $form['process'] = array('#type' => 'hidden', '#value' => 'true');
+    // Make sure the form redirects in the end
+    $form['destination'] = array('#type' => 'hidden', '#value' => 'example/todo');
+
+    return confirm_form($form,
+        'Are you sure?',
+        'example/add',
+        $desc,
+        'Continue',
+        'Start again');
+}
+?>

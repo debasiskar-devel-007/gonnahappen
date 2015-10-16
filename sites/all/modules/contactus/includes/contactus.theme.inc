@@ -46,9 +46,9 @@ function theme_contactus_full($variables) {
   $output .= '</div>';
   // $output .= '<div class="party">' . $lawmakers->party . ' ' . $lawmakers->state  . '  ' . $lawmakers->district . '</div>';
 
-  if (user_access('administer Contactus entities') && isset($contacts->contact_id)) {
+  if (user_access('administer contact entities') && isset($contacts->contact_id)) {
     //$edit_link = '<ul class="tabs primary"><li>';
-    $edit_link .= l(t('Edit'), 'admin/content/contactus/manage/' . $contacts->contact_id, array('attributes' => array('class' => 'admin-edit-link viewdeletebtn2')));
+    $edit_link = l(t('Edit'), 'admin/content/contactus/manage/' . $contacts->contact_id, array('attributes' => array('class' => 'admin-edit-link viewdeletebtn2')));
     //$edit_link .= '</li></ul>';
     $output .= $edit_link;
   }

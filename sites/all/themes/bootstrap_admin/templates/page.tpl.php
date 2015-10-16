@@ -9,11 +9,7 @@
     $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
 
     global $base_url;
-
-
-
-    ?>
-
+?>
 
     <header class="main-header">
 
@@ -184,12 +180,13 @@
             <?php
             $menu=(menu_tree_all_data('navigation'));
 
-             //var_dump(count($menu));
-            // exit;
+             //var_dump($menu);
+           // echo count($menu);
+           // exit;
 
             if(count($menu)>0){
-                echo ' <ul class="sidebar-menu left_side_menu">
-                     <li class="header">HEADER</li> ';
+                echo ' <ul class="sidebar-menu left_side_menu">';
+
 
 
                 display_menu_tree($menu);
@@ -212,7 +209,7 @@
                     if(count($value['below']))
                     {
 
-
+                       // echo $value['link']['link_title'];
                         $menuarr[]=$value['link']['link_path'];
                         echo '<li class="treeview">
                     <a href="javascript:void(0)">

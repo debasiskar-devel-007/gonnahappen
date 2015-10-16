@@ -6,12 +6,12 @@
  */
 
 // 50 items per page.
-define('TOTAL_ITEMS_PER_PAGE_EVENT', 50);
+define('TOTAL_ITEMS_PER_PAGE_EVENT', 5);
 
 // Admin uri links.
 define('ADMIN_CONTENT_EVENT_MANAGE_URI', '/admin/content/event/manage/');
 define('ADMIN_CONTENT_EVENT_EDIT_URI', 'admin/content/event/edit/');
-define('ADMIN_CONTENT_EVENT_URI', '/admin/content/event');
+define('ADMIN_CONTENT_EVENT_URI', '/admin/content/event/');
 
 /**
  * Implements hook_entity_info().
@@ -43,7 +43,7 @@ function event_entity_info() {
                 'label' => 'Event',
                 'admin' => array(
                     'path' => 'admin/structure/event/manage',
-                    'access arguments' => array('administer event'),
+                    'access arguments' => array('administer event entities'),
                 ),
             ),
         ),
@@ -67,17 +67,12 @@ function event_menu() {
         'access arguments' => array('view', 1),
     );
 
-    $items['event/locate'] = array(
-        'page callback' => 'event_locate_callback',
-        'access arguments' => array('access content'),
-    );
-
     $items['admin/content/event/bulk/delete/%'] = array(
-        'title' => 'Bulk Delete contacts',
+        'title' => 'Bulk Delete delete',
         'page callback' => 'drupal_get_form',
-        'page arguments' => array('contactus_bulk_delete', 5),
+        'page arguments' => array('event_bulk_delete', 5),
         'access arguments' => array('administer event entities'),
-        'file' => 'includes/contactus.admin.inc',
+        'file' => 'includes/event.admin.inc',
     );
 
     $items['admin/structure/event'] = array(
@@ -98,7 +93,7 @@ function event_menu() {
 function event_theme() {
     return array(
         'event_full' => array(
-            'variables' => array('contact' => NULL),
+            'variables' => array('event' => NULL),
             'file' => 'includes/event.theme.inc',
         ),
     );
@@ -225,14 +220,19 @@ class eventUIController extends EntityDefaultUIController {
     /**
      * Admin form for searching and doing bulk operations.
      */
+
+
+
+
     public function overviewForm($form, &$form_state) {
-        $form['pager'] = array('#theme' => 'pager');
         //echo 656;
+        $form['#prefix'] = '<div class="headingtext"><span>Event List</span></div>';
+        $add='<span class="addimage" style="margin-bottom:5px;">'.l(t('Add Event'), ADMIN_CONTENT_EVENT_URI . 'add' ,array('query' => array('destination' => ADMIN_CONTENT_EVENT_MANAGE_URI))).'</span>';
 
         $header = array(
             //'contact_id' => array('data' => t('Contact  ID'), 'field' => 'contact_id'),
             'event_name' => array('data' => t('Event Name'), 'field' => 'event_name'),
-            'location' => array('data' => t('Location'), 'field' => 'location'),
+            'event_status' => array('data' => t('Event Status'), 'field' => 'event_status'),
            // 'enquiry_type' => array('data' => t('Enquiry Type'), 'field' => 'enquiry_type'),
             'operations' => array('data' => t('Operations'), 'field' => 'operations'),
         );
@@ -263,26 +263,25 @@ class eventUIController extends EntityDefaultUIController {
         $query->pager(TOTAL_ITEMS_PER_PAGE_EVENT);
 
         $result = $query->execute();
-        //var_dump($result);
-        $contact_results = !empty($result['event']) ? $result['event'] : array();
-        $contactus_array = !empty($contact_results) ? event_load_multiple(array_keys($contact_results)) : array();
+       // var_dump($result);
+        $event_results = !empty($result['event']) ? $result['event'] : array();
+        $event_array = !empty($event_results) ? event_load_multiple(array_keys($event_results)) : array();
 
         //var_dump($contactus_array);
        // exit;
-        foreach ($contactus_array as $contact_id => $contactus) {
-            $options['event_id-' . $contact_id] = array(
+        foreach ($event_array as $event_id => $event) {
+            $options['event_id-' . $event_id] = array(
                 //'contact_id' => l($contactus->contact_id, 'contactus/' . $contactus->contact_id),
-                'event_name' => l($contactus->event_name, 'contactus/' . $contactus->event_name),
-                'location' => l($contactus->location, 'contactus/' . $contactus->location),
+                'event_name' => l($event->event_name, 'event/' . $event->event_id),
+                'event_status' => $event->event_status?'Active':'Deactive',
                // 'enquiry_type' => l(show_enquiry_in_detail($contactus->enquiry_type), 'contactus/' . $contactus->contact_id),
                 'operations' =>
-                    l(t('View'), 'contactus/' . $contactus->event_id) . ' ' .
-                    l(t('Edit'), ADMIN_CONTENT_EVENT_MANAGE_URI . $contact_id ,array('query' => array('destination' => ADMIN_CONTENT_EVENT_MANAGE_URI))) . ' ' .
-                    l(t('Delete'), ADMIN_CONTENT_EVENT_MANAGE_URI . $contact_id . '/delete', array('attributes' => array('class' => array('contactus-delete-' . $contactus->event_id), ), 'query' => array('destination' => ADMIN_CONTENT_EVENT_URI))),
+                    l(t('View'), 'event/' . $event->event_id) . '&nbsp;&nbsp;&nbsp;&nbsp;' .
+                    l(t('Edit'), ADMIN_CONTENT_EVENT_MANAGE_URI . $event_id ,array('query' => array('destination' => ADMIN_CONTENT_EVENT_MANAGE_URI))) . '&nbsp;&nbsp;&nbsp;&nbsp;' .
+                    l(t('Delete'), ADMIN_CONTENT_EVENT_MANAGE_URI . $event_id . '/delete', array('attributes' => array('class' => array('event-delete-' . $event->event_id), ), 'query' => array('destination' => ADMIN_CONTENT_EVENT_URI))),
             );
         }
 
-        /*
         $form['search'] = array(
             '#type' => 'fieldset',
             '#title' => t('Basic Search'),
@@ -312,7 +311,7 @@ class eventUIController extends EntityDefaultUIController {
             '#type' => 'select',
             '#options' => array(
                 0 => t('Select a bulk operation'),
-                'delete' => t('Delete selected lawmakers'),
+                'delete' => t('Delete selected event'),
             ),
         );
 
@@ -320,14 +319,17 @@ class eventUIController extends EntityDefaultUIController {
             '#type' => 'submit',
             '#value' => t('Submit'),
         );
-*/
+
         $form['entities'] = array(
             '#type' => 'tableselect',
             '#header' => $header,
             '#options' => $options,
             '#attributes' => array('class' => array('entity-sort-table')),
-            '#empty' => t('There are no lawmakers.'),
+            '#empty' => t('There are no event.'),
+            '#prefix' =>$add,
         );
+        $form['pager'] = array('#theme' => 'pager');
+        drupal_set_title('Event List');
 
         return $form;
     }
@@ -337,24 +339,50 @@ class eventUIController extends EntityDefaultUIController {
      */
     public function overviewFormSubmit($form, &$form_state) {
         $values = $form_state['input'];
-        $contact_ids = array();
+        $event_ids = array();
 
         if (!empty($values['entities'])) {
             foreach ($values['entities'] as $index => $value) {
                 if (!empty($value)) {
-                    $contact_ids[] = str_replace('$contact_ids-', '', $value);
+                    $event_ids[] = str_replace('$event_ids-', '', $value);
                 }
             }
 
             switch ($values['operations']) {
                 case 'delete':
-                    drupal_goto('admin/content/contactus/bulk/delete/' . implode('|', $contact_ids));
+
+                    drupal_goto('admin/content/event/bulk/delete/' . implode('|', $event_ids));
+
+ /*                   $form = array();
+                    //$form_state['contact_ids'] = $contact_ids;
+                    //var_dump($form_state['contact_ids']);
+                    foreach($event_ids as $cid){
+                        //echo 56;
+
+                        $form_state['event_ids'][]=str_replace('event_id-','',$cid);
+
+                    }
+
+                    // print_r($form_state['contact_ids']);exit;
+                    $contacts = contactus_load_multiple($form_state['event_ids']);
+                    $variables = array(
+                        'type' => 'ul',
+                        'items' => array(),
+                        'title' => '',
+                        'attributes' => array(),
+                    );
+
+                    foreach ($contacts as $contact) {
+                        echo $variables['items'][] = $contact->first_name;
+                    }
+
+                    event_delete_multiple($form_state['event_ids']);*/
                     break;
             }
         }
 
         if (!empty($values['search_text'])) {
-            drupal_goto('admin/content/contactus', array('query' => array('search' => $values['search_text'])));
+            drupal_goto('admin/content/event', array('query' => array('search' => $values['search_text'])));
         }
     }
 
@@ -374,40 +402,40 @@ function event_entity_query($conditions = array()) {
     $result = $query->execute();
 
     if (isset($result['event'])) {
-        $contact = array_keys($result['event']);
+        $event = array_keys($result['event']);
     }
     else {
-        $contact = array();
+        $event = array();
     }
 
-    return $contact;
+    return $event;
 }
 
 /**
  * Label callback for lawmakers entities, for menu router, etc.
  */
-function event_label_callback($contact, $type) {
-    return empty($contact->username) ? 'Untitled Event' : $contact->event_name;
+function event_label_callback($event, $type) {
+    return empty($event->event_name) ? 'Untitled Event' : $event->event_name;
 }
 
 /**
  * Saves Lawmaker to database.
  */
-function event_save(contactus $contact) {
-    return $contact->save();
+function event_save(event $event) {
+    return $event->save();
 }
 
 
 
-function event_view_entity($contact) {
+function event_view_entity($event) {
     //echo 5656;
     //exit;
-    $fullname = $contact->event_name;
+    $fullname = $event->event_name;
     drupal_set_title($fullname);
     // Path not entity.
-    $contact_output = theme('event_full', array('contact' => $contact));
+    $event_output = theme('event_full', array('event' => $event));
     //var_dump($contact);
-    return $contact_output;
+    return $event_output;
 }
 
 
@@ -427,32 +455,32 @@ class event extends Entity {
 /**
  * Menu autoloader for /lawmakers.
  */
-function event_load($contact_id, $reset = FALSE) {
-    $contacts = event_load_multiple(array($contact_id), array(), $reset);
-    return reset($contacts);
+function event_load($event_id, $reset = FALSE) {
+    $events = event_load_multiple(array($event_id), array(), $reset);
+    return reset($events);
 }
 
 /**
  * Load multiple lawmakers based on certain conditions.
  */
-function event_load_multiple($contact_id = array(), $conditions = array(), $reset = FALSE) {
-    return entity_load('event', $contact_id, $conditions, $reset);
+function event_load_multiple($event_id = array(), $conditions = array(), $reset = FALSE) {
+    return entity_load('event', $event_id, $conditions, $reset);
 }
 
 /**
  * Deletes a lawmaker.
  */
-function event_delete(lawmakers $contacts) {
-    $contacts->delete();
+function event_delete(event $events) {
+    $events->delete();
 }
 
 /**
  * Delete multiple lawmakers.
  */
-function event_delete_multiple(array $contact__ids) {
+function event_delete_multiple(array $event__ids) {
     //var_dump($contact__ids);
     //exit;
 
-    entity_get_controller('event')->delete($contact__ids);
+    entity_get_controller('event')->delete($event__ids);
 }
 

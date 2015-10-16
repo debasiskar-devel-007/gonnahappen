@@ -25,13 +25,51 @@ function event_schema() {
               'not null' => TRUE,
               'default' => '',
       ),
-      'location' => array(
-              'description' => 'Location',
+      'event_desc' => array(
+              'description' => 'Event Description',
+              'type' => 'text',
+              'not null' => TRUE,
+      ),
+       'event_banner' => array(
+               'description' => 'Event Banner',
+               'type' => 'varchar',
+               'length' => '255',
+               'not null' => TRUE,
+               'default' => '',
+       ),
+      'featured_news_banner' => array(
+              'description' => 'Featured News Banner',
               'type' => 'varchar',
               'length' => '255',
               'not null' => TRUE,
               'default' => '',
       ),
+      'featured_news_content' => array(
+              'description' => 'Featured News Description',
+              'type' => 'text',
+              'not null' => TRUE,
+      ),
+
+       'event_status' => array(
+         'description' => 'Event status',
+         'type' => 'int',
+         'length' => 'tiny',
+         'default' => 0,
+       ),
+       'event_create_time' => array(
+         'description' => 'Event create Time',
+         'type' => 'varchar',
+         'length' => '255',
+         'not null' => TRUE,
+         'default' => '',
+       ),
+       'photo_video' => array(
+         'description' => 'Photo Video',
+         'type' => 'text',
+         'not null' => TRUE,
+       ),
+
+
       'search_tag' => array(
               'description' => 'search_tag',
               'type' => 'varchar',

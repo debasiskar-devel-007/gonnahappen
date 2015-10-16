@@ -20,7 +20,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('First Name'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->first_name) ? $contacts->first_name : '',
-        '#description' => t('First name .'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
 		'#markup'=>"<div>asd</div>",
@@ -32,7 +32,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('Last Name'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->last_name) ? $contacts->last_name : '',
-        '#description' => t('last name.'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
     );
@@ -41,7 +41,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('Email'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->email) ? $contacts->email : '',
-        '#description' => t('Email.'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
     );
@@ -50,7 +50,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('phone'),
         '#type' => 'textfield',
         '#default_value' => isset($contacts->phone) ? $contacts->phone : '',
-        '#description' => t('phone.'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
     );
@@ -60,7 +60,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('postedon'),
         '#type' => 'hidden',
         '#default_value' => isset($contacts->postedon) ? $contacts->postedon : '',
-        '#description' => t('postedon.'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
         '#value'=>time()
@@ -100,7 +100,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#title' => t('comments'),
         '#type' => 'textarea',
         '#default_value' => isset($contacts->comments) ? $contacts->comments : '',
-        '#description' => t('comments.'),
+        '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
     );
@@ -173,31 +173,18 @@ function contactus_form_submit($form, &$form_state)
 
     $form_state['values']['enquiry_type'] = implode("|", $form_state['values']['enquiry_type']);
     $form_state['values']['search_tag'] = $form_state['values']['enquiry_type'] . $form_state['values']['first_name'] . $form_state['values']['last_name'];
-    //print_r($form_state['values']);echo '<br/>========';exit;
-    // $form['submit']['#attributes']['onclick'] = "popup()";
     $contactus = entity_ui_form_submit_build_entity($form, $form_state);
-
-    //echo current_path();
-
     if (current_path() == 'contact-us'){
-
-
         $entity_type = 'contactus';
         $entity = entity_create($entity_type, array());
-
         $entity->first_name = $form_state['values']['first_name'];
-
-
         $entity->last_name = $form_state['values']['last_name'];
-
         $entity->email = $form_state['values']['email'];
         $entity->phone = $form_state['values']['phone'];
         $entity->postedon = $form_state['values']['postedon'];
         $entity->comments = $form_state['values']['comments'];
         $entity->enquiry_type = $form_state['values']['enquiry_type'];
         $entity->search_tag = $form_state['values']['search_tag'];
-
-
         $entity->save();
 
         $form_state['redirect'] = url($base_url."/".current_path()."?submit=saved");
@@ -235,21 +222,16 @@ Thanks for pop me out of that button, but now i\'m done so you can close this wi
 /**
  * Confirmation before bulk deleting lawmakers.
  */
-function contactus_bulk_delete($form, &$form_state, $contact_ids) {
-    $contact_ids = explode('|', $contact_ids);
-    $contacts = contactus_load_multiple($contact_ids);
 
-    $form = array();
-    //$form_state['contact_ids'] = $contact_ids;
-    //var_dump($form_state['contact_ids']);
+function contactus_bulk_delete($contact_ids,$form, &$form_state) {
+     $contact_ids = explode('|', $contact_ids);
+     $form = array();
     foreach($contact_ids as $cid){
 
         $form_state['contact_ids'][]=str_replace('contact_id-','',$cid);
 
     }
-
-    //var_dump($form_state['contact_ids']);
-
+    $contacts = contactus_load_multiple($form_state['contact_ids']);
     $variables = array(
         'type' => 'ul',
         'items' => array(),
@@ -258,13 +240,14 @@ function contactus_bulk_delete($form, &$form_state, $contact_ids) {
     );
 
     foreach ($contacts as $contact) {
-        echo $variables['items'][] = $contact->first_name;
+         $variables['items'][] = $contact->first_name;
     }
 
-    $form['summary'] = array(
-        '#markup' => theme_item_list($variables),
-    );
+    /*    $form['summary'] = array(
+            '#markup' => theme_item_list($variables),
+        );*/
 
+    // print_r($contacts);exit;
     return confirm_form($form, t('Delete all contacts?'), 'admin/content/contactus', t('Placeholder description'), t('Delete all'), t('Cancel'));
 }
 
@@ -273,8 +256,6 @@ function contactus_bulk_delete($form, &$form_state, $contact_ids) {
  */
 function contactus_bulk_delete_submit($form, &$form_state) {
     $contact_ids = $form_state['contact_ids'];
-    //var_dump($contact_ids);
-    //exit;
     contactus_delete_multiple($contact_ids);
 
     drupal_set_message(t('contact deleted'));
