@@ -56,6 +56,7 @@ if($form_id == 'banner_form' ){
   $cur_path=current_path();
     if(current_path()=='admin/content/banner/add' || strpos($cur_path,'admin/content/banner/manage') !== false ) {
         $form['banner_image']['#access'] = FALSE;
+        $form['banner_image_url']['#access'] = FALSE;
     }
    else{
       // echo current_path();exit;

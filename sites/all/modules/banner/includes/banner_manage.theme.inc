@@ -60,7 +60,7 @@ function theme_banner_manage_full($variables) {
         <thead>
             <tr>
                 <th>
-                    <a href="#" title="sort by Banner Name" class="active">Banner Name</a>
+                    <a href="#" title="sort by Banner Name" class="active">Banner Image</a>
                 </th>
                 <th>
                     <a href="#" title="sort by Banner Status" class="active">Operations</a>
