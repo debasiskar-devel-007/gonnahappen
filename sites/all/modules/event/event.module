@@ -81,6 +81,14 @@ function event_menu() {
         'type' => MENU_NORMAL_ITEM,
     );
 
+    $items['event-details/%event'] = array(
+        'title' => 'Events',
+        'page callback' => 'eventdetails',
+        'page arguments' => array(1),
+        'access arguments' => array('public event entities'),
+        //'access arguments' => array('Manage Bannaer', 1),
+    );
+
     return $items;
 }
 
@@ -95,6 +103,10 @@ function event_theme() {
         'event_full' => array(
             'variables' => array('event' => NULL),
             'file' => 'includes/event.theme.inc',
+        ),
+        'event_details' => array(
+            'variables' => array('event' => NULL),
+            'file' => 'includes/event_details.theme.inc',
         ),
     );
 }
@@ -190,6 +202,10 @@ function event_permission() {
             'title' => t('Administer Event Entities'),
             'description' => t('Allows a user to administer Event entities'),
         ),
+        'public event entities' => array(
+            'title' => t('public Event Entities'),
+            'description' => t('Allows public'),
+        ),
         'view event entities' => array(
             'title' => t('View Event Entity'),
             'description' => t('Allows a user to view the Event entities.'),
@@ -231,8 +247,9 @@ class eventUIController extends EntityDefaultUIController {
 
         $header = array(
             //'contact_id' => array('data' => t('Contact  ID'), 'field' => 'contact_id'),
-            'event_name' => array('data' => t('Event Name'), 'field' => 'event_name'),
-            'event_status' => array('data' => t('Event Status'), 'field' => 'event_status'),
+            'event_name' => array('data' => t('Event Category Name'), 'field' => 'event_name'),
+            'event_banner' => array('data' => t('Event Banner'), 'field' => 'event_banner'),
+            'event_status' => array('data' => t('Status'), 'field' => 'event_status'),
            // 'enquiry_type' => array('data' => t('Enquiry Type'), 'field' => 'enquiry_type'),
             'operations' => array('data' => t('Operations'), 'field' => 'operations'),
         );
@@ -270,9 +287,15 @@ class eventUIController extends EntityDefaultUIController {
         //var_dump($contactus_array);
        // exit;
         foreach ($event_array as $event_id => $event) {
+            $imgpath = file_load($event->event_banner)->uri;
+            $fullimgpath = '<img src="'.image_style_url('medium', $imgpath).'" class="event_banner" />';
+
+
             $options['event_id-' . $event_id] = array(
                 //'contact_id' => l($contactus->contact_id, 'contactus/' . $contactus->contact_id),
                 'event_name' => l($event->event_name, 'event/' . $event->event_id),
+                //'event_banner' => l($event->event_banner, 'event/' . $event->event_id),
+                'event_banner' => l($fullimgpath, 'event/' . $event->event_id, array('html'=>true)),
                 'event_status' => $event->event_status?'Active':'Deactive',
                // 'enquiry_type' => l(show_enquiry_in_detail($contactus->enquiry_type), 'contactus/' . $contactus->contact_id),
                 'operations' =>
@@ -482,5 +505,28 @@ function event_delete_multiple(array $event__ids) {
     //exit;
 
     entity_get_controller('event')->delete($event__ids);
+}
+
+function eventdetails($event){
+    $arg=arg();
+
+    drupal_set_title('Event Category Details');
+
+    $banner_output = theme('event_details', array('event'=>$event));
+
+    return $banner_output;
+
+}
+
+function event_custom_theme() {
+    $pos = strpos(current_path(), 'event-details');
+
+    if ($pos === false) {
+        //echo "The string '$findme' was not found in the string '$mystring'";
+    } else {
+        return 'frontendtheme';
+    }
+
+
 }
 

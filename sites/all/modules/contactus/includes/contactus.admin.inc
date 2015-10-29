@@ -122,6 +122,7 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
 
     $form['actions'] = array(
         '#type' => 'actions',
+        '#prefix'=>'<div class="clear"></div>',
         'submit' => array(
             '#type' => 'submit',
             '#value' => isset($contacts->contact_id) ? t('Update contact us') : t('Save Contact'),

@@ -33,7 +33,7 @@ function event_form($form, &$form_state, $event = NULL) {
         '#type' => 'managed_file',
         '#name' => 'event_banner',
         '#default_value' => isset($event->event_banner) ? $event->event_banner : '',
-        '#description' => t(''),
+        '#description' => t('(Upload banner size width 1920px and height 595px)'),
 /*        '#required' => TRUE,*/
         '#upload_validators' => array(
             'file_validate_extensions' => array('gif png jpg jpeg'),
@@ -47,7 +47,7 @@ function event_form($form, &$form_state, $event = NULL) {
         '#type' => 'managed_file',
         '#name' => 'featured_news_banner',
         '#default_value' => isset($event->featured_news_banner) ? $event->featured_news_banner : '',
-        '#description' => t(''),
+        '#description' => t('(Upload banner size width 728px and height 318px)'),
         /*        '#required' => TRUE,*/
         '#upload_validators' => array(
             'file_validate_extensions' => array('gif png jpg jpeg'),
@@ -58,9 +58,11 @@ function event_form($form, &$form_state, $event = NULL) {
     );
     $form['featured_news_content'] = array(
         '#title' => t('Featured News Content'),
+        //'#id'=>'featured_news_content',
         '#type' => 'textarea',
-        '#default_value' => isset($event->event_name) ? $event->event_name : '',
+        '#default_value' => isset($event->featured_news_content) ? $event->featured_news_content : '',
         '#required' => TRUE,
+        //'#format'=>'full_html'
 /*        '#maxlength' => 255,*/
     );
 
