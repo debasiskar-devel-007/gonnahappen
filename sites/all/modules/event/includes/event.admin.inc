@@ -9,7 +9,7 @@
  */
 function event_form($form, &$form_state, $event = NULL) {
     $form = array();
-    $heading= isset($event->event_id) ? t("Edit Event") : t("Add Event");
+    $heading= isset($event->event_id) ? t("Edit Event Category") : t("Add Event Category");
     $form['#attributes']=array('class'=>'admin-form');
     $form['#attributes']['enctype'] = 'multipart/form-data';
 

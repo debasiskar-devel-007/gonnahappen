@@ -94,6 +94,7 @@ function event_menu() {
 
 
 
+
 /**
  * Implements hook_theme().
  */
@@ -242,8 +243,8 @@ class eventUIController extends EntityDefaultUIController {
 
     public function overviewForm($form, &$form_state) {
         //echo 656;
-        $form['#prefix'] = '<div class="headingtext"><span>Event List</span></div>';
-        $add='<span class="addimage" style="margin-bottom:5px;">'.l(t('Add Event'), ADMIN_CONTENT_EVENT_URI . 'add' ,array('query' => array('destination' => ADMIN_CONTENT_EVENT_MANAGE_URI))).'</span>';
+        $form['#prefix'] = '<div class="headingtext"><span>Event Category List</span></div>';
+        $add='<span class="addimage" style="margin-bottom:5px;">'.l(t('Add Event Category'), ADMIN_CONTENT_EVENT_URI . 'add' ,array('query' => array('destination' => ADMIN_CONTENT_EVENT_MANAGE_URI))).'</span>';
 
         $header = array(
             //'contact_id' => array('data' => t('Contact  ID'), 'field' => 'contact_id'),

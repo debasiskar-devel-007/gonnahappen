@@ -47,7 +47,7 @@ function bootstrap_admin_form_element($variables) {
 
     $output = '<div class="form-group">
 			<label for="exampleInputEmail1">'.$variables['element']['#title'].'</label>
-	'.$variables['element']['#children'].' <div>'.$variables['element']['#description'].'</div></div>';
+	'.$variables['element']['#children'].' <div>'.@$variables['element']['#description'].'</div></div>';
 
 	if($variables['element']['#type']=='checkbox')
 

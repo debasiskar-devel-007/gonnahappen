@@ -199,7 +199,7 @@
 
             global $catcounter;
             $catcounter =0;
-            $menuarr[]=' ';
+            $menuarr=array();
 
             function display_menu_tree($arr){
                 global $base_url;
@@ -222,9 +222,15 @@
 
 
                     }
-                    //print_r($menuarr);
+                    if(count(@$menuarr) > 0){
+                        if(!in_array($value['link']['link_path'],@$menuarr)){
+                            echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                        }
+                    }else{
+                        echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                    }
 
-                   if(!in_array($value['link']['link_path'],@$menuarr)) echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+
                 }
             }
 
