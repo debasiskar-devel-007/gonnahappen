@@ -132,6 +132,14 @@ function event_form_validate($form, &$form_state) {
  */
 function event_form_submit($form, &$form_state) {
 
+    $file = file_load($form_state['values']['event_banner']);
+    $file->status = 1;
+    file_save($file);
+
+    $file = file_load($form_state['values']['featured_news_banner']);
+    $file->status = 1;
+    file_save($file);
+
     $form_state['values']['search_tag']=$form_state['values']['event_name'];
    // var_dump($form_state['values']);
    // exit;

@@ -63,7 +63,7 @@ function banner1_form_submit($form, &$form_state)
     global $base_url;
       $form_state['values']['search_tag'] = $form_state['values']['banner_name'];
     $banner= entity_ui_form_submit_build_entity($form, $form_state);
-    $banner->save();
+     $banner->save();
     drupal_set_message(t('@banner_name banner has been saved.', array('@banner_name' => $banner->banner_name)));
     $form_state['redirect'] = 'admin/content/banner/';
 }

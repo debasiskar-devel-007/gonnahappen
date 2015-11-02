@@ -76,7 +76,57 @@ if($form_id == 'banner_form' ){
 
     }
 }
-    if($form_id == 'user_pass')
+
+    if($form_id == 'eventlist_form' ) {
+        if(strpos(current_path(),'eventlist/gallery/add') !== false ) {
+
+            $form['eventlist_name']['#access'] = FALSE;
+            $form['eventlist_details']['#access'] = FALSE;
+            $form['eventlist_category']['#access'] = FALSE;
+            $form['eventlist_banner']['#access'] = FALSE;
+            $form['eventlist_location']['#access'] = FALSE;
+            $form['eventlist_email']['#access'] = FALSE;
+            $form['eventlist_phone']['#access'] = FALSE;
+            $form['eventlist_website']['#access'] = FALSE;
+            $form['eventlist_image']['#access'] = FALSE;
+            $form['eventlist_status']['#access'] = FALSE;
+            $form['search_tag']['#access'] = FALSE;
+            $form['eventlist_created_by']['#access'] = FALSE;
+            $form['eventlist_created_time']['#access'] = FALSE;
+            $form['eventlist_datetime']['#access'] = FALSE;
+            $form['eventlist_artist']['#access'] = FALSE;
+            $form['eventlist_video']['#access'] = FALSE;
+            $heading = t("Add Event Gallery Image");
+
+
+            $form['eventlist_gallery'] = array(
+                '#title' => t('Event Gallery Image'),
+                '#type' => 'managed_file',
+                '#name' => 'eventlist_gallery',
+                '#multiple'=>true,
+                '#default_value' => '',
+                '#description' => t(''),
+                '#upload_validators' => array(
+                    'file_validate_extensions' => array('gif png jpg jpeg'),
+                    // Pass the maximum file size in bytes
+                    'file_validate_size' => array(MAX_FILE_SIZE*1024*1024),
+                ),
+                '#upload_location' => 'public://eventlist/gallery',
+                '#process' => array('formmanager_eventlist_gallery_element_process'),
+
+
+            );
+
+            $form['actions'] = array(
+                '#type' => 'actions',
+                'submit' => array(
+                    '#type' => 'submit',
+                    '#value' => t('Add Image'),
+                ),
+                );
+        }
+    }
+        if($form_id == 'user_pass')
     {
         $form['name']['#attributes']['class'][] = 'form-control';
         $form['name']['#attributes']['placeholder'] = 'Enter Your Email or User Name';
@@ -116,4 +166,10 @@ function loginformvalidate($form, &$form_state){
         unset($_COOKIE["usernameval"]);
 
     }
+}
+
+function formmanager_eventlist_gallery_element_process($element, &$form_state, $form){
+    $element = file_managed_file_process($element, $form_state, $form);
+    $element['upload_button']['#access'] = FALSE;
+    return $element;
 }

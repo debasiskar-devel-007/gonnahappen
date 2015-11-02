@@ -21,6 +21,7 @@ scripts[]=js/app.min.js
 scripts[]=js/respond.min.js
 scripts[]=js/html5shiv.min.js
 scripts[]=js/bootstrap3-wysihtml5.all.js
+scripts[]=js/bootstrap-datepicker.js
 
 scripts[]=js/common.js
 scripts[]=js/jquery.lettering.js
