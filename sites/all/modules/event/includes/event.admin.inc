@@ -108,8 +108,10 @@ function event_form($form, &$form_state, $event = NULL) {
       '#value' => isset($event->event_id) ? t('Update Event') : t('Save Event'),
     ),
     'delete_link' => array(
-      '#markup' => isset($event->event_id) ? l(t('Delete'), 'admin/content/event/manage/' . $event->event_id . '/delete', array('attributes' => array('id' => array('event-delete-' . $event->event_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/event'))) : ''));
-  return $form;
+     // '#markup' => isset($event->event_id) ? l(t('Delete'), 'admin/content/event/manage/' . $event->event_id . '/delete', array('attributes' => array('id' => array('event-delete-' . $event->event_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/event'))) : ''));
+        '#markup' => isset($event->event_id) ? l(t('Back'), 'admin/content/event/', array('attributes' => array('class' => array('button remove deletebtn')), )) : ''));
+
+    return $form;
 }
 
 /**
@@ -132,19 +134,23 @@ function event_form_validate($form, &$form_state) {
  */
 function event_form_submit($form, &$form_state) {
 
+    $form_state['values']['search_tag']=$form_state['values']['event_name'];
+
+    $event = entity_ui_form_submit_build_entity($form, $form_state);
+    $event->save();
+
+
     $file = file_load($form_state['values']['event_banner']);
     $file->status = 1;
     file_save($file);
+    file_usage_add($file, 'event', 'event', $event->event_id);
 
     $file = file_load($form_state['values']['featured_news_banner']);
     $file->status = 1;
     file_save($file);
+    file_usage_add($file, 'event', 'event', $event->event_id);
 
-    $form_state['values']['search_tag']=$form_state['values']['event_name'];
-   // var_dump($form_state['values']);
-   // exit;
-    $event = entity_ui_form_submit_build_entity($form, $form_state);
-    $event->save();
+
   drupal_set_message(t('@event_name event has been saved.', array('@event_name' => $event->event_name)));
   // $form_state['redirect'] = 'admin/content/lawmakers';
   $form_state['redirect'] = 'event/' . $event->event_id;

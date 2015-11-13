@@ -9,7 +9,7 @@
  */
 //print theme('links', array('links' => menu_navigation_links('menu-dashboard-menu'), 'attributes' => array('class'=> array('dashboard_link_list')) ));
 function theme_dashboard($variables) {
-  $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
+  //$themepath=(drupal_get_path('theme',$GLOBALS['theme']));
     $themepath=(drupal_get_path('theme',$GLOBALS['theme']));
 
     $menu= menu_tree_all_data('menu-dashboard-menu');

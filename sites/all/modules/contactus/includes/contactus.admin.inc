@@ -133,7 +133,8 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
 
 
         'delete_link' => array(
-            '#markup' => isset($contacts->contact_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->contact_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->contact_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
+           // '#markup' => isset($contacts->contact_id) ? l(t('Delete'), 'admin/content/contactus/manage/' . $contacts->contact_id . '/delete', array('attributes' => array('id' => array('contactus-delete-' . $contacts->contact_id), 'class' => array('button remove deletebtn')), 'query' => array('destination' => 'admin/content/contactus'))) : ''));
+            '#markup' => isset($contacts->contact_id) ? l(t('Back'), 'admin/content/contactus/', array('attributes' => array('class' => array('button remove deletebtn')), )) : ''));
 
     if(current_path() == 'contact-us')
     {

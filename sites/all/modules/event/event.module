@@ -81,7 +81,7 @@ function event_menu() {
         'type' => MENU_NORMAL_ITEM,
     );
 
-    $items['event-details/%event'] = array(
+    $items['event-category-details/%event'] = array(
         'title' => 'Events',
         'page callback' => 'eventdetails',
         'page arguments' => array(1),
@@ -520,7 +520,7 @@ function eventdetails($event){
 }
 
 function event_custom_theme() {
-    $pos = strpos(current_path(), 'event-details');
+    $pos = strpos(current_path(), 'event-category-details');
 
     if ($pos === false) {
         //echo "The string '$findme' was not found in the string '$mystring'";

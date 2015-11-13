@@ -180,10 +180,6 @@
             <?php
             $menu=(menu_tree_all_data('navigation'));
 
-             //var_dump($menu);
-           // echo count($menu);
-           // exit;
-
             if(count($menu)>0){
                 echo ' <ul class="sidebar-menu left_side_menu">';
 
@@ -206,7 +202,7 @@
                 //$catcounter=0;
                 foreach($arr as $key=>$value){
 
-                    if(count($value['below']))
+                    if(count($value['below']) && $value['link']['hidden'] == 0)
                     {
 
                        // echo $value['link']['link_title'];
@@ -222,15 +218,17 @@
 
 
                     }
-                    if(count(@$menuarr) > 0){
-                        if(!in_array($value['link']['link_path'],@$menuarr)){
+
+                    if($value['link']['hidden'] == 0){
+                        if(count(@$menuarr) > 0){
+                            $value['link']['link_path'];
+                            if(!in_array($value['link']['link_path'],@$menuarr)){
+                                echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
+                            }
+                        }else{
                             echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
                         }
-                    }else{
-                        echo '<li><a href="'.$base_url.'/'.$value['link']['link_path'].'"><i class="fa fa-link"></i> <span>'.$value['link']['link_title'].'</span></a></li>';
                     }
-
-
                 }
             }
 

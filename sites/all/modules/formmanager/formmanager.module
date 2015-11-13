@@ -47,7 +47,7 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
             setcookie('_fnet_keepLogged', 1, time()+200000);
         }*/
 //exit;
-        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=dashboard';
+        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=home';
 
     }
     //echo current_path();exit;
@@ -96,6 +96,7 @@ if($form_id == 'banner_form' ){
             $form['eventlist_datetime']['#access'] = FALSE;
             $form['eventlist_artist']['#access'] = FALSE;
             $form['eventlist_video']['#access'] = FALSE;
+            $form['eventlist_tag']['#access'] = FALSE;
             $heading = t("Add Event Gallery Image");
 
 
@@ -126,7 +127,8 @@ if($form_id == 'banner_form' ){
                 );
         }
     }
-        if($form_id == 'user_pass')
+
+    if($form_id == 'user_pass')
     {
         $form['name']['#attributes']['class'][] = 'form-control';
         $form['name']['#attributes']['placeholder'] = 'Enter Your Email or User Name';
@@ -148,6 +150,33 @@ if($form_id == 'banner_form' ){
 
     }
 
+
+    if($form_id == 'product_form' ){
+       // echo strpos($cur_path,'admin/content/product/manage');exit;
+        $cur_path=current_path();
+     //  echo  strpos($cur_path,'admin/content/product/manage');exit;
+        if(current_path()=='admin/content/product/add' || strpos($cur_path,'admin/content/product/manage')!==FALSE) {
+              $form['product_gallery']['#access'] = FALSE;
+            // $form['banner_image_url']['#access'] = FALSE;
+
+        }
+        else{
+            // echo current_path();exit;
+            //$ar=arg();
+
+            $form['product_name']['#access'] = FALSE;
+            $form['prodcut_category_id']['#access'] = FALSE;
+            $form['event_id']['#access'] = FALSE;
+            $form['product_desc']['#access'] = FALSE;
+            $form['product_image']['#access'] = FALSE;
+            $form['product_price']['#access'] = FALSE;
+            $form['product_sku']['#access'] = FALSE;
+            $form['priority']['#access'] = FALSE;
+            $form['status']['#access'] = FALSE;
+               // }
+
+        }
+    }
 
 }
 
@@ -173,3 +202,6 @@ function formmanager_eventlist_gallery_element_process($element, &$form_state, $
     $element['upload_button']['#access'] = FALSE;
     return $element;
 }
+
+
+

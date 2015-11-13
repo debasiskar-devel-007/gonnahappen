@@ -10,11 +10,13 @@ stylesheets[all][]=css/AdminLTE.min.css
 stylesheets[all][]=css/skin-green.css
 stylesheets[all][]=css/theme_style.css
 stylesheets[all][]=css/bootstrap3-wysihtml5.min.css
+stylesheets[all][]=css/daterangepicker.css
 
 
 ;scripts[]=js/jQuery.js
 scripts[]=js/jQuery-2.1.4.min.js
 scripts[]=js/bootstrap.min.js
+scripts[]=js/moment.js
 scripts[]=js/ckeditor/ckeditor.js
 scripts[]=js/ckeditor/samples/old/sample.js
 scripts[]=js/app.min.js
@@ -22,6 +24,7 @@ scripts[]=js/respond.min.js
 scripts[]=js/html5shiv.min.js
 scripts[]=js/bootstrap3-wysihtml5.all.js
 scripts[]=js/bootstrap-datepicker.js
+scripts[]=js/daterangepicker.js
 
 scripts[]=js/common.js
 scripts[]=js/jquery.lettering.js
