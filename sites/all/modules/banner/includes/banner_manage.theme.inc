@@ -12,33 +12,26 @@ function theme_banner_manage_full($variables) {
     $_SERVER['HTTP_REFERER'];//exit;
      $arg[2];//exit;
     global $base_url;
-   // print_r($variables['banner_image']);exit;
-   if($variables['banner_image']) {
+   //print_r($variables['banner_image']);exit;
+   if(!empty($variables['banner_image']) && !empty($variables['banner_image_url'])) {
        $image_ids = explode('||', $variables['banner_image']);
        $image_urls = explode('||', $variables['banner_image_url']);
-       $image_id_path = array_combine($image_ids,$image_urls);
        $banner_image_url = array();
-       if (count($image_id_path > 0)) {
-           foreach ($image_id_path as $index => $val) {
-               $imgpath = file_load($index)->uri;
-               $banner_image_url[$index]['image'] = file_create_url($imgpath);
-               $banner_image_url[$index]['image_url'] = $val;
+
+       if(count($image_ids) >= count($image_urls)){
+            foreach($image_urls as $key=>$val){
+                $imgpath = file_load($image_ids[$key])->uri;
+                $banner_image_url[$image_ids[$key]]['image'] = file_create_url($imgpath);
+                $banner_image_url[$image_ids[$key]]['image_url'] = $val;
+            }
+       }else{
+           foreach($image_ids as $key=>$val){
+               $imgpath = file_load($image_ids[$key])->uri;
+               $banner_image_url[$val]['image'] = file_create_url($imgpath);
+               $banner_image_url[$val]['image_url'] = $image_urls[$key];
            }
        }
 
-
-       /*       $image_ids = explode('||', $variables['banner_image']);
-
-              // print_r($image_ids);exit;
-              $banner_image_url = array();
-              if (count($image_ids > 0)) {
-                  foreach ($image_ids as $index => $val) {
-
-
-                      $imgpath = file_load($val)->uri;
-                      $banner_image_url[$val] = file_create_url($imgpath);
-                  }
-              }*/
    }
     $banner_id= @$variables['banner_id'];
     $output = '';

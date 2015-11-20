@@ -4,9 +4,7 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
 {
     if($form_id == 'user_login' )
     {
-
-
-        $form['name']['#attributes']['class'][] = 'form-control';
+         $form['name']['#attributes']['class'][] = 'form-control';
         $form['name']['#attributes']['placeholder'] = 'User Name';
         $form['pass']['#attributes']['class'][] = 'form-control';
         $form['pass']['#attributes']['placeholder'] = 'Password';
@@ -78,7 +76,7 @@ if($form_id == 'banner_form' ){
 }
 
     if($form_id == 'eventlist_form' ) {
-        if(strpos(current_path(),'eventlist/gallery/add') !== false ) {
+        if(strpos(current_path(),'eventlist/gallery/add') !== false || strpos(current_path(),'add-gallery') !== false ) {
 
             $form['eventlist_name']['#access'] = FALSE;
             $form['eventlist_details']['#access'] = FALSE;
@@ -105,6 +103,7 @@ if($form_id == 'banner_form' ){
                 '#type' => 'managed_file',
                 '#name' => 'eventlist_gallery',
                 '#multiple'=>true,
+                '#required'=>true,
                 '#default_value' => '',
                 '#description' => t(''),
                 '#upload_validators' => array(
@@ -126,8 +125,97 @@ if($form_id == 'banner_form' ){
                 ),
                 );
         }
+        if(strpos(current_path(),'add-event') !== false || strpos(current_path(),'edit-event') !== false ) {
+            $form['eventlist_name']['#prefix'] = FALSE;
+            $form['actions']['delete_link'] = FALSE;
+        }
     }
 
+    if($form_id == 'tournament_form'){
+        if(strpos(current_path(),'tournament/gallery/add') !== false ) {
+            $form['tournament_name']['#access'] = FALSE;
+            $form['description1']['#access'] = FALSE;
+            $form['description2']['#access'] = FALSE;
+            $form['tournament_banner']['#access'] = FALSE;
+            $form['tournament_image']['#access'] = FALSE;
+            $form['status']['#access'] = FALSE;
+            $form['search_tag']['#access'] = FALSE;
+
+            $form['tournament_gallery'] = array(
+                '#title' => t('Tournament Gallery Image'),
+                '#type' => 'managed_file',
+                '#name' => 'tournament_gallery',
+                '#multiple'=>true,
+                '#required'=>true,
+                '#default_value' => '',
+                '#description' => t(''),
+                '#upload_validators' => array(
+                    'file_validate_extensions' => array('gif png jpg jpeg'),
+                    // Pass the maximum file size in bytes
+                    'file_validate_size' => array(MAX_FILE_SIZE*1024*1024),
+                ),
+                '#upload_location' => 'public://tournament/gallery',
+                '#process' => array('formmanager_tournament_gallery_element_process'),
+
+
+            );
+
+            $form['actions'] = array(
+                '#type' => 'actions',
+                'submit' => array(
+                    '#type' => 'submit',
+                    '#value' => t('Add Image'),
+                ),
+            );
+        }
+        if(strpos(current_path(),'tournament/team/add') !== false ) {
+            $form['tournament_name']['#access'] = FALSE;
+            $form['description1']['#access'] = FALSE;
+            $form['description2']['#access'] = FALSE;
+            $form['tournament_banner']['#access'] = FALSE;
+            $form['tournament_image']['#access'] = FALSE;
+            $form['status']['#access'] = FALSE;
+            $form['search_tag']['#access'] = FALSE;
+            $heading = t("Add Team");
+
+            $form['team_name'] = array(
+                '#title' => t('Team Name'),
+                '#type' => 'textfield',
+                '#default_value' => '',
+                '#required' => TRUE,
+                '#maxlength' => 255,
+                '#prefix' => '<div class="headingtext"><span>'.$heading.'</span></div>',
+            );
+
+            $form['team_logo'] = array(
+                '#title' => t('Team Logo'),
+                '#type' => 'managed_file',
+                '#name' => 'team_logo',
+                '#multiple'=>true,
+                '#required'=>true,
+                '#default_value' => '',
+                '#description' => t('(Upload banner size width 136px and height 136px)'),
+                '#upload_validators' => array(
+                    'file_validate_extensions' => array('gif png jpg jpeg'),
+                    // Pass the maximum file size in bytes
+                    'file_validate_size' => array(MAX_FILE_SIZE*1024*1024),
+                ),
+                '#upload_location' => 'public://tournament/team',
+                '#process' => array('formmanager_team_logo_element_process'),
+
+
+            );
+
+
+            $form['actions'] = array(
+                '#type' => 'actions',
+                'submit' => array(
+                    '#type' => 'submit',
+                    '#value' => t('Add Team'),
+                ),
+            );
+        }
+    }
     if($form_id == 'user_pass')
     {
         $form['name']['#attributes']['class'][] = 'form-control';
@@ -198,6 +286,17 @@ function loginformvalidate($form, &$form_state){
 }
 
 function formmanager_eventlist_gallery_element_process($element, &$form_state, $form){
+    $element = file_managed_file_process($element, $form_state, $form);
+    $element['upload_button']['#access'] = FALSE;
+    return $element;
+}
+
+function formmanager_tournament_gallery_element_process($element, &$form_state, $form){
+    $element = file_managed_file_process($element, $form_state, $form);
+    $element['upload_button']['#access'] = FALSE;
+    return $element;
+}
+function formmanager_team_logo_element_process($element, &$form_state, $form){
     $element = file_managed_file_process($element, $form_state, $form);
     $element['upload_button']['#access'] = FALSE;
     return $element;

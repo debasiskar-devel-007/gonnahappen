@@ -31,11 +31,12 @@ function theme_talent_signup($variables) {
     	<div class="col-lg-8  col-lg-offset-0 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
 
            <div class="signupblock" >
-		   <h2>Get your own <span>gonnahappen.com<span> </br>
-account in seconds </h2>
+		   <h2>Join us and <span>show your talent</span> </br>to the world
+
+</h2>
 		   
 		   
-           '.drupal_render(drupal_get_form('general_user_sign_up_form')).'
+           '.drupal_render(drupal_get_form('talent_sign_up_form')).'
            </div>
 
     	</div>
