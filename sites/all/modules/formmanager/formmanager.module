@@ -45,7 +45,7 @@ function formmanager_form_alter(&$form, &$form_state, $form_id)
             setcookie('_fnet_keepLogged', 1, time()+200000);
         }*/
 //exit;
-        $form['#action']= $GLOBALS['base_url'].'/user/login?destination=home';
+        //$form['#action']= $GLOBALS['base_url'].'/user/login?destination=home';
 
     }
     //echo current_path();exit;
@@ -240,17 +240,13 @@ if($form_id == 'banner_form' ){
 
 
     if($form_id == 'product_form' ){
-       // echo strpos($cur_path,'admin/content/product/manage');exit;
+/*
         $cur_path=current_path();
-     //  echo  strpos($cur_path,'admin/content/product/manage');exit;
-        if(current_path()=='admin/content/product/add' || strpos($cur_path,'admin/content/product/manage')!==FALSE) {
-              $form['product_gallery']['#access'] = FALSE;
-            // $form['banner_image_url']['#access'] = FALSE;
 
+        if(current_path()=='admin/content/product/add' || strpos($cur_path,'admin/content/product/manage')!==FALSE || current_path()=='admin/content/product/add') {
+              $form['product_gallery']['#access'] = FALSE;
         }
         else{
-            // echo current_path();exit;
-            //$ar=arg();
 
             $form['product_name']['#access'] = FALSE;
             $form['prodcut_category_id']['#access'] = FALSE;
@@ -261,11 +257,216 @@ if($form_id == 'banner_form' ){
             $form['product_sku']['#access'] = FALSE;
             $form['priority']['#access'] = FALSE;
             $form['status']['#access'] = FALSE;
-               // }
 
+        }*/
+
+        if(current_path() == 'add-product' || strpos(current_path(),'edit-product')!==FALSE || strpos(current_path(),'add-product-gallery')!==FALSE){
+         //   $form['event_id']['#access'] = FALSE;
+            $form['status']['#access'] = FALSE;
+            $form['actions']['delete_link'] = FALSE;
+        }else{
+            $form['terms']['#access'] = FALSE;
+        }
+
+       if((strpos(current_path(),'product/gallery/add'))!==FALSE  || strpos(current_path(),'add-product-gallery') !== false) {
+            $form['product_name']['#access'] = FALSE;
+            $form['prodcut_category_id']['#access'] = FALSE;
+            $form['event_id']['#access'] = FALSE;
+            $form['product_desc']['#access'] = FALSE;
+            $form['product_image']['#access'] = FALSE;
+            $form['product_price']['#access'] = FALSE;
+            $form['product_sku']['#access'] = FALSE;
+            $form['priority']['#access'] = FALSE;
+            $form['status']['#access'] = FALSE;
+           $form['terms']['#access'] = FALSE;
+
+           $form['product_gallery']['#process'] = array('formmanager_product_gallery_element_process');
+
+           $form['actions'] = array(
+               '#type' => 'actions',
+               'submit' => array(
+                   '#type' => 'submit',
+                   '#value' => t('Add Image'),
+               ),
+           );
+
+        }else{
+            $form['product_gallery']['#access'] = FALSE;
+        }
+
+
+    }
+
+    if($form_id == 'productattribute_form' ){
+        global $user;
+        if( strpos(current_path(),'add-product-attributes')!==FALSE){
+            $form['prodcut_id']['#default_value'] = arg(1);
+        }
+        if( strpos(current_path(),'edit-product-attributes')!==FALSE){
+            $form['actions']['delete_link'] = FALSE;
+        }
+        if( strpos(current_path(),'add-product-attributes')!==FALSE || strpos(current_path(),'edit-product-attributes')!==FALSE){
+            $pattr_res = array();
+            $pattr_arr = db_select('product','p')->fields('p')->condition('product_created_by',$user->uid,'=')->execute();
+            if($pattr_arr->rowCount()){
+                while($row = $pattr_arr->fetchAssoc()){
+                    $pattr_res[$row['product_id']] = $row['product_name'];
+                }
+            }
+            $form['prodcut_id']['#options'] = $pattr_res;
         }
     }
 
+    if($form_id == 'event_partner_sign_up_form' ){
+        if(current_path()=='edit-profile') {
+
+            global $user;
+            $username = $user->name;
+
+            $res = db_select('custom_user','cu')->fields('cu')->condition('user_name',$username,'=')->execute()->fetchAssoc();
+
+            $form['username']['#access'] = FALSE;
+            $form['password']['#access'] = FALSE;
+            $form['email']['#access'] = FALSE;
+            $form['user_image']['#access'] = FALSE;
+
+            $form['custom_id'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['custom_user_id'],
+            );
+            $form['prev_email'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['email'],
+            );
+            $form['prev_username'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['username'],
+            );
+
+            $form['event_partner']['#default_value'] = $res['event_partner'];
+            $form['fname']['#default_value'] = $res['first_name'];
+            $form['lname']['#default_value'] = $res['last_name'];
+            $form['address']['#default_value'] = $res['address'];
+            $form['phone']['#default_value'] = $res['phone'];
+            $form['city']['#default_value'] = $res['city'];
+            $form['state']['#default_value'] = $res['state'];
+            $form['zip']['#default_value'] = $res['zip'];
+            $form['contact_way']['#default_value'] = $res['contact_way'];
+            $form['contact_time']['#default_value'] = $res['contact_time'];
+            $form['website']['#default_value'] = $res['website'];
+            $form['is_sell_request']['#default_value'] = $res['is_sell_request'];
+            $form['user_comment']['#default_value'] = $res['user_comment'];
+            $form['is_sell_interested']['#default_value'] = $res['is_sell_interested'];
+        }
+    }
+
+    if($form_id == 'affiliate_sign_up_form' ){
+        if(current_path()=='edit-profile') {
+
+            global $user;
+            $username = $user->name;
+
+            $res = db_select('custom_user','cu')->fields('cu')->condition('user_name',$username,'=')->execute()->fetchAssoc();
+
+            $form['username']['#access'] = FALSE;
+            $form['password']['#access'] = FALSE;
+            $form['email']['#access'] = FALSE;
+            $form['user_image']['#access'] = FALSE;
+
+            $form['custom_id'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['custom_user_id'],
+            );
+            $form['prev_email'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['email'],
+            );
+            $form['prev_username'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['username'],
+            );
+
+            $form['fname']['#default_value'] = $res['first_name'];
+            $form['lname']['#default_value'] = $res['last_name'];
+            $form['phone']['#default_value'] = $res['phone'];
+            $form['user_comment']['#default_value'] = $res['user_comment'];
+        }
+    }
+
+    if($form_id == 'general_user_sign_up_form' ){
+        if(current_path()=='edit-profile') {
+
+            global $user;
+            $username = $user->name;
+
+            $res = db_select('custom_user','cu')->fields('cu')->condition('user_name',$username,'=')->execute()->fetchAssoc();
+
+            $form['username']['#access'] = FALSE;
+            $form['password']['#access'] = FALSE;
+            $form['email']['#access'] = FALSE;
+            $form['user_image']['#access'] = FALSE;
+
+            $form['custom_id'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['custom_user_id'],
+            );
+            $form['prev_email'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['email'],
+            );
+            $form['prev_username'] = array(
+                '#title' => t(''),
+                '#type' => 'hidden',
+                '#value' => $res['username'],
+            );
+
+            $form['fname']['#default_value'] = $res['first_name'];
+            $form['lname']['#default_value'] = $res['last_name'];
+            $form['phone']['#default_value'] = $res['phone'];
+        }
+    }
+
+    if($form_id == 'add_asset_form' ){
+        if(isset($_GET['type'])){
+            if($_GET['type'] == 'Audio'){
+                $form['talent_image_file']['#access'] = FALSE;
+                $form['youtube_link']['#access'] = FALSE;
+            }elseif($_GET['type'] == 'Image'){
+                $form['talent_audio_file']['#access'] = FALSE;
+                $form['youtube_link']['#access'] = FALSE;
+            }elseif($_GET['type'] == 'Video'){
+                $form['talent_image_file']['#access'] = FALSE;
+                $form['talent_audio_file']['#access'] = FALSE;
+            }else{
+                $form['talent_image_file']['#access'] = FALSE;
+                $form['youtube_link']['#access'] = FALSE;
+            }
+        }else{
+            $form['talent_image_file']['#access'] = FALSE;
+            $form['youtube_link']['#access'] = FALSE;
+        }
+    }
+
+}
+
+
+function formmanager_user_login(&$edit, $account) {
+    // Do not redirect when the user is resetting her password.
+    if (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset') {
+        if (in_array('Site Admin', $account->roles)) {
+            drupal_goto('dashboard');
+        }else{
+            drupal_goto('my-account');
+        }
+    }
 }
 
 
@@ -297,6 +498,11 @@ function formmanager_tournament_gallery_element_process($element, &$form_state, 
     return $element;
 }
 function formmanager_team_logo_element_process($element, &$form_state, $form){
+    $element = file_managed_file_process($element, $form_state, $form);
+    $element['upload_button']['#access'] = FALSE;
+    return $element;
+}
+function formmanager_product_gallery_element_process($element, &$form_state, $form){
     $element = file_managed_file_process($element, $form_state, $form);
     $element['upload_button']['#access'] = FALSE;
     return $element;

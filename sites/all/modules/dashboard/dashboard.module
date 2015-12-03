@@ -22,19 +22,17 @@ function dashboard_menu() {
 $items = array();
 
 
+    $items['dashboard'] = array(
+        'title' => 'Dashboard',
+        'page callback' => 'drawdashboard',
+        'access arguments' => array('Dashboard Access'),
+    );
 
-/*$items['contact/locate'] = array(
-'page callback' => 'contact_locate_callback',
-'access arguments' => array('administer contact entities'),
-);*/
-
-$items['dashboard'] = array(
-'title' => 'Dashboard',
-'page callback' => 'drawdashboard',
-//'page arguments' => array('contactus_bulk_delete', 5),
-'access arguments' => array('Dashboard Access'),
-//'file' => 'includes/contactus.admin.inc',
-);
+    $items['add-welcome-message'] = array(
+        'title' => 'Update Welcome Message',
+        'page callback' => 'addwelcomemsg',
+        'access arguments' => array('Dashboard Access'),
+    );
 
 
 
@@ -69,4 +67,108 @@ function dashboard_theme() {
             'file' => 'includes/dashboard.theme.inc',
         ),
     );
+}
+
+function addwelcomemsg(){
+    return drupal_render(drupal_get_form('welcome_msg_form'));
+}
+
+function welcome_msg_form($form, &$form_state){
+    $heading= t("Update Welcome Messge");
+
+    $prev_talent_msg = '';
+    $prev_affiliate_msg = '';
+    $prev_user_msg = '';
+    $prev_event_partner_msg = '';
+
+    $welcome_messge_res = db_select('welcome_messge','w')->fields('w')->execute();
+    if($welcome_messge_res->rowCount()){
+        while($row = $welcome_messge_res->fetchAssoc()){
+            if($row['user_id'] == 1){
+                $prev_user_msg = $row['welcome_messge'];
+            }
+            if($row['user_id'] == 2){
+                $prev_affiliate_msg = $row['welcome_messge'];
+            }
+            if($row['user_id'] == 3){
+                $prev_talent_msg = $row['welcome_messge'];
+            }
+            if($row['user_id'] == 4){
+                $prev_event_partner_msg = $row['welcome_messge'];
+            }
+        }
+    }
+
+    $form['talent_msg'] = array(
+        '#title' => t('Message For Talent'),
+        '#type' => 'textarea',
+        '#default_value' => $prev_talent_msg,
+        '#required' => TRUE,
+        '#description' => t(''),
+        '#prefix' => '<div class="headingtext"><span>'.$heading.'</span></div>',
+    );
+
+    $form['affiliate_msg'] = array(
+        '#title' => t('Message For Affiliate'),
+        '#type' => 'textarea',
+        '#default_value' => $prev_affiliate_msg,
+        '#required' => TRUE,
+        '#description' => t(''),
+    );
+
+    $form['user_msg'] = array(
+        '#title' => t('Message For General User'),
+        '#type' => 'textarea',
+        '#default_value' => $prev_user_msg,
+        '#required' => TRUE,
+        '#description' => t(''),
+    );
+
+    $form['event_partner_msg'] = array(
+        '#title' => t('Message For Event Partner'),
+        '#type' => 'textarea',
+        '#default_value' => $prev_event_partner_msg,
+        '#required' => TRUE,
+        '#description' => t(''),
+    );
+
+    $form['search_submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+
+    return $form;
+}
+
+function welcome_msg_form_submit($form, &$form_state){
+
+    $user_msg_res = db_select('welcome_messge','w')->fields('w')->condition('user_id',1,'=')->execute();
+    $affiliate_msg_res = db_select('welcome_messge','w')->fields('w')->condition('user_id',2,'=')->execute();
+    $talent_msg_res = db_select('welcome_messge','w')->fields('w')->condition('user_id',3,'=')->execute();
+    $event_partner_msg_res = db_select('welcome_messge','w')->fields('w')->condition('user_id',4,'=')->execute();
+
+    if($user_msg_res->rowCount()){
+        db_update('welcome_messge')->fields(array('welcome_messge' => $form_state['values']['user_msg']))->condition('user_id',1,'=')->execute();
+    }else{
+        db_insert('welcome_messge')->fields(array('user_id' => 1,'welcome_messge' => $form_state['values']['user_msg']))->execute();
+    }
+
+    if($affiliate_msg_res->rowCount()){
+        db_update('welcome_messge')->fields(array('welcome_messge' => $form_state['values']['affiliate_msg']))->condition('user_id',2,'=')->execute();
+    }else{
+        db_insert('welcome_messge')->fields(array('user_id' => 2,'welcome_messge' => $form_state['values']['affiliate_msg']))->execute();
+    }
+
+    if($talent_msg_res->rowCount()){
+        db_update('welcome_messge')->fields(array('welcome_messge' => $form_state['values']['talent_msg']))->condition('user_id',3,'=')->execute();
+    }else{
+        db_insert('welcome_messge')->fields(array('user_id' => 3,'welcome_messge' => $form_state['values']['talent_msg']))->execute();
+    }
+
+    if($event_partner_msg_res->rowCount()){
+        db_update('welcome_messge')->fields(array('welcome_messge' => $form_state['values']['event_partner_msg']))->condition('user_id',4,'=')->execute();
+    }else{
+        db_insert('welcome_messge')->fields(array('user_id' => 4,'welcome_messge' => $form_state['values']['event_partner_msg']))->execute();
+    }
+
 }
