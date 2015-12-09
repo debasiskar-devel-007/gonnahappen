@@ -143,7 +143,7 @@ function theme_faq_full($variables) {
 		</div>
         <div class="col-lg-4 col-lg-offset-0 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1 hmblck3rhtside">
         	<h1>AD space</h1><div class="clearfix"></div>
-            <div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
+            <!--<div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
             	<h1>My Account</h1>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#sitefan">Site Fan</a></li>
@@ -168,7 +168,7 @@ function theme_faq_full($variables) {
                       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
                     </div>
                   </div>
-            </div>
+            </div>-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hmblck3rhtsideblck2">
             	<h1>News</h1>
                 <ul class="nav nav-tabs">

@@ -46,7 +46,7 @@ account in seconds </h2>
         	'.drupal_render(drupal_get_form('event_search')).'
         	<div style="font-size:12px;">*Search by Event Name,Event Category, Location or Tag List</div>
         	<h1>AD space</h1><div class="clearfix"></div>
-            <div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
+            <!--<div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
             	<h1>My Account</h1>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#sitefan">Site Fan</a></li>
@@ -71,7 +71,7 @@ account in seconds </h2>
                       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
                     </div>
                   </div>
-            </div>
+            </div>-->
             '.$poprecenthtml.'
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hmblck3rhtsideblck3">
             	<img src="'.$base_url.'/'.$theme_path.'/images/hmblck3rightsideblck3bg.png" alt="#" class="img-responsive">
