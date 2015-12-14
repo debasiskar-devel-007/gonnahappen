@@ -10,7 +10,14 @@
 function theme_banner_manage_full($variables) {
     $arg=arg();
     $_SERVER['HTTP_REFERER'];//exit;
-     $arg[2];//exit;
+    if($arg[2]){
+        $arg_link=$arg[2];
+    }
+    if($arg[3]){
+        $arg_link=$arg[2].'/'.$arg[3];
+    }
+
+    $arg[2];//exit;
     global $base_url;
    //print_r($variables['banner_image']);exit;
    if(!empty($variables['banner_image']) && !empty($variables['banner_image_url'])) {
@@ -64,7 +71,7 @@ function theme_banner_manage_full($variables) {
 
 
     $output .= '<div class="contact-div">';
-    $output .= '<div class="contact_meta main_contact"><span class="addimage">'.l(t('Add Image'), 'banner/image/add/' . $banner_id.'/'.$arg[2]).'</span><div class="clearfix"></div>
+    $output .= '<div class="contact_meta main_contact"><span class="addimage">'.l(t('Add Image'), 'banner/image/add/' . $banner_id.'/'.$arg_link).'</span><div class="clearfix"></div>
 
     <!--<label>Banner Image:</label><span>Operation</span>-->
     <table class="table table-bordered table-hover dataTable sticky-enabled table-select-processed">

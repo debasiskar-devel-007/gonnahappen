@@ -1,5 +1,5 @@
 <?php
-define('TOTAL_ITEMS_PER_PAGE_FAQ1',1);
+define('TOTAL_ITEMS_PER_PAGE_FAQ1',6);
 define('FRONTEND_FAQ_EDIT', '/admin/content/faq/manage/');
 /**
  * @file
@@ -13,6 +13,7 @@ define('FRONTEND_FAQ_EDIT', '/admin/content/faq/manage/');
 
 
 function theme_faq_full($variables) {
+
     global  $user;
     // echo   $user->uid ;exit;
 
@@ -116,6 +117,14 @@ function theme_faq_full($variables) {
  $faq_listing;
 
 
+
+    $faqbanneraddrightbannerhtml1 = '';
+    $faqbanneraddrightbannerhtml2 = '';
+    if (module_exists('banner')) {
+        $faqbanneraddrightbannerhtml1 = right_dynamic_banner(82,'faq');
+        $faqbanneraddrightbannerhtml2 = right_dynamic_banner(83,'faq');
+    }
+
     $output = '<div class="container-fluid banner-wrapper">
 	<div class="row">'
         .$hometopeditimgpath
@@ -142,7 +151,10 @@ function theme_faq_full($variables) {
 		<div class="clearfix"></div>
 		</div>
         <div class="col-lg-4 col-lg-offset-0 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1 hmblck3rhtside">
-        	<h1>AD space</h1><div class="clearfix"></div>
+                  	 <div class="right_bannerad">'.$faqbanneraddrightbannerhtml1.'</div>
+
+        	<!--<h1>AD space</h1>--.>
+        	<div class="clearfix"></div>
             <!--<div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
             	<h1>My Account</h1>
                 <ul class="nav nav-tabs">
@@ -210,7 +222,9 @@ function theme_faq_full($variables) {
                   </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hmblck3rhtsideblck3">
-            	<img src="'.$theme_path.'/images/hmblck3rightsideblck3bg.png" alt="#" class="img-responsive">
+            	'.$faqbanneraddrightbannerhtml2.'
+
+            	<!--<img src="'.$theme_path.'/images/hmblck3rightsideblck3bg.png" alt="#" class="img-responsive">-->
 				
             </div>
         </div>

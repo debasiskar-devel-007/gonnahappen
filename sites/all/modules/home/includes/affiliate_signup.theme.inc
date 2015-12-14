@@ -11,6 +11,7 @@
 
 
 function theme_affiliate_signup($variables) {
+
    global  $user;
 
     $theme_path=drupal_get_path('theme', 'frontendtheme');
@@ -76,6 +77,12 @@ function theme_affiliate_signup($variables) {
     if (module_exists('eventlist')) {
         $poprecenthtml = get_pop_recent_event();
     }
+    $affiliatessignuprightbannerhtml1 = '';
+    $affiliatessignuprightbannerhtml2 = '';
+    if (module_exists('banner')) {
+        $affiliatessignuprightbannerhtml1 = right_dynamic_banner(51,'affiliates');
+        $affiliatessignuprightbannerhtml2 = right_dynamic_banner(52,'affiliates');
+    }
 
     $output = '
 <div class="container-fluid banner-wrapper">
@@ -119,7 +126,10 @@ function theme_affiliate_signup($variables) {
         <div class="col-lg-4 col-lg-offset-0 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1 hmblck3rhtside">
         	'.drupal_render(drupal_get_form('event_search')).'
         	<div style="font-size:12px;">*Search by Event Name,Event Category, Location or Tag List</div>
-        	<h1>AD space</h1><div class="clearfix"></div>
+        	 <div class="right_bannerad">'.$affiliatessignuprightbannerhtml1.'</div>
+
+        	<!--<h1>AD space</h1>-->
+        	<div class="clearfix"></div>
             <!--<div class="col-lg-12 col-md-12 col-sm-12 ol-xs-12 hmblck3rhtsideblck1">
             	<h1>My Account</h1>
                 <ul class="nav nav-tabs">
@@ -148,7 +158,8 @@ function theme_affiliate_signup($variables) {
             </div>-->
             '.$poprecenthtml.'
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hmblck3rhtsideblck3">
-            	<img src="'.$base_url.'/'.$theme_path.'/images/hmblck3rightsideblck3bg.png" alt="#" class="img-responsive">
+            '.$affiliatessignuprightbannerhtml2.'
+            	<!--<img src="'.$base_url.'/'.$theme_path.'/images/hmblck3rightsideblck3bg.png" alt="#" class="img-responsive">-->
             </div>
         </div>
     </div>
