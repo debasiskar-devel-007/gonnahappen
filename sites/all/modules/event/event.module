@@ -520,7 +520,7 @@ function eventdetails($event){
 }
 
 function event_custom_theme() {
-    if(strpos(current_path(), 'managebanner/73/event-category-details') !== false || strpos(current_path(), 'managebanner/74/event-category-details') !== false|| strpos(current_path(), 'managebanner/75/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/73/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/74/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/75/event-category-details') !== false){
+    if(strpos(current_path(), 'managebanner/73/event-category-details') !== false || strpos(current_path(), 'managebanner/74/event-category-details') !== false|| strpos(current_path(), 'managebanner/75/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/73/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/74/event-category-details') !== false|| strpos(current_path(), 'banner/image/add/75/event-category-details') !== false || strpos(current_path(), 'managebanner/92/event-category-details') !== false ||strpos(current_path(), 'banner/image/add/92/event-category-details') !== false){
 
         return 'bootstrap_admin';
     }

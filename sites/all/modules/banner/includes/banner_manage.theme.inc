@@ -16,8 +16,9 @@ function theme_banner_manage_full($variables) {
     if($arg[3]){
         $arg_link=$arg[2].'/'.$arg[3];
     }
-
-    $arg[2];//exit;
+    if($arg[4]){
+        $arg_link=$arg[2].'/'.$arg[3].'/'.$arg[4];
+    }
     global $base_url;
    //print_r($variables['banner_image']);exit;
    if(!empty($variables['banner_image']) && !empty($variables['banner_image_url'])) {

@@ -91,6 +91,13 @@ function contactus_menu() {
         'page callback' => 'contactus_frontend',
         //'type' => MENU_NORMAL_ITEM,
     );
+    $items['feedback'] = array(
+        'title' => 'Feedback',
+        'access arguments' => array('anonymous user access'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('feedback_form'),
+        'type' => MENU_CALLBACK,
+    );
 
 
 
@@ -530,4 +537,41 @@ function _examp_form_confirm(&$form_state) {
         'Continue',
         'Start again');
 }
+
+function feedback_frontend(){
+    $first_name=$_POST['first_name'];
+    $last_name=$_POST['last_name'];
+    $email=$_POST['email'];
+    $phone=$_POST['phone'];
+    $enquiry_type=implode("|", $_POST['enquiry_type']);
+    $postedon=time();
+    $search_tag=$enquiry_type.$first_name.$last_name;
+    $comments=$_POST['comments'];
+
+            $contactid_id=db_insert('contactus')
+                ->fields(array('first_name' =>$first_name,
+                    'last_name' => $last_name,
+                    'email' => $email,
+                    'phone' =>$phone,
+                    'enquiry_type' => $enquiry_type,
+                    'postedon' =>$postedon,
+                    'comments' => $comments,
+                    'search_tag' =>$search_tag,
+                ))
+                ->execute();
+    echo $contactid_id;
+
+  }
+
+function contactus_form_ajax_submit($form, $form_state){
+    if (!empty($form_state['input']['first_name'])) {
+        return 'Subscribed !';
+    }
+    else {
+        return $form;
+    }
+}
+
+
+
 ?>

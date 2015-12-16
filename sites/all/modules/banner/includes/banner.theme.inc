@@ -40,7 +40,7 @@ function theme_banner_full($variables) {
 
     if (user_access('administer banner entities') && isset($banner->banner_id)) {
         //$edit_link = '<ul class="tabs primary"><li>';
-        $edit_link = l(t('Edit'), 'admin/content/contactus/manage/' . $banner->banner_id, array('attributes' => array('class' => 'admin-edit-link viewdeletebtn2')));
+        $edit_link = l(t('Edit'), 'admin/content/banner/manage/' . $banner->banner_id, array('attributes' => array('class' => 'admin-edit-link viewdeletebtn2')));
         //$edit_link .= '</li></ul>';
         $output .= $edit_link;
     }

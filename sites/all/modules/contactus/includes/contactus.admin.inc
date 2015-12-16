@@ -10,12 +10,14 @@
 function contactus_form($form, &$form_state, $contacts = NULL) {
 
   /*  echo '<div style="color:red;">';*/
-    $form = array();
+
+
+        $form = array();
     $heading= isset($contacts->contact_id) ? t("Edit contact") : t("Add Contact");
-	$form['#attributes']=array('class'=>'admin-form');
+    $form['#attributes']=array('class'=>'admin-form');
     //echo current_path();
 
-   /* $form['prefix']='<div style="color:red;">';*/
+    /* $form['prefix']='<div style="color:red;">';*/
     $form['first_name'] = array(
         '#title' => t('First Name'),
         '#type' => 'textfield',
@@ -23,9 +25,9 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#description' => t(''),
         '#required' => TRUE,
         '#maxlength' => 255,
-		'#markup'=>"<div>asd</div>",
+        '#markup'=>"<div>asd</div>",
         '#prefix' => '<div class="headingtext"><span>'.$heading.'</span></div>',
-		'#attributes'=>array('class'=>'form-control')
+        '#attributes'=>array('class'=>'form-control')
     );
 
     $form['last_name'] = array(
@@ -66,14 +68,14 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
         '#value'=>time()
     );
 
-/*$form['enquiry_type'] = array(
-    '#title' => t('enquiry_type'),
-    '#type' => 'textfield',
-    '#default_value' => isset($contacts->enquiry_type) ? $contacts->enquiry_type : '',
-    '#description' => t('enquiry_type.'),
-    '#required' => TRUE,
-    '#maxlength' => 255,
-  );*/
+    /*$form['enquiry_type'] = array(
+        '#title' => t('enquiry_type'),
+        '#type' => 'textfield',
+        '#default_value' => isset($contacts->enquiry_type) ? $contacts->enquiry_type : '',
+        '#description' => t('enquiry_type.'),
+        '#required' => TRUE,
+        '#maxlength' => 255,
+      );*/
 
     $options = array();
     $options["Site_Visitor"] = "Site Visitor";
@@ -127,8 +129,6 @@ function contactus_form($form, &$form_state, $contacts = NULL) {
             '#type' => 'submit',
             '#value' => isset($contacts->contact_id) ? t('Update contact us') : t('Save Contact'),
         ),
-
-
 
 
 

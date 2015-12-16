@@ -44,7 +44,7 @@ function theme_affiliate_signup($variables) {
         foreach($banner_image_url as $key=>$img_src){
             //echo $img_src;
             $img_listing .='<div class="item home_banner_image homebanner">
-        <a  href="'.$base_url.'/'.$img_src.'"><img src="'.$key.'" alt=""></a>
+        <a target="_blank" href="'.$base_url.'/'.$img_src.'"><img src="'.$key.'" alt=""></a>
 
        </div>';
 
